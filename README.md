@@ -1,6 +1,6 @@
 # Atelier North Interiors
 
-A fictional Vancouver interior design studio portfolio demo built with React, Vite and JavaScript JSX. This repository currently contains the Phase 0B environment and a minimal application shell only.
+A fictional Vancouver interior design studio portfolio demo built with React, Vite and JavaScript JSX. Phase 1 provides the visual design system, responsive application shell and route skeletons. Full page content and feature flows are still pending.
 
 ## Requirements
 
@@ -23,28 +23,34 @@ On Windows, if command resolution selects an inaccessible system shim, use the a
 ## Architecture
 
 - `src/components/layout`, `ui`, `features`: shared shell, primitives and feature components.
-- `src/pages`: future route components.
+- `src/pages`: shared route skeleton and custom not-found page.
 - `src/data`: future local fictional content records.
 - `src/assets`, `public`: bundled and directly served assets.
 - `src/hooks`, `src/utils`: reusable hooks and pure utilities when needed.
 - `src/test`: Vitest setup; tests live beside their subjects.
-- `src/App.jsx`, `main.jsx`, `index.css`: minimal shell, React/router entry and Tailwind import.
+- `src/App.jsx`, `main.jsx`, `index.css`: route definitions, React/router entry, Tailwind theme tokens and global shell styles.
 
 Empty directories contain .gitkeep files to preserve the approved structure in version control. The project is tracked on `main` in the existing public [GitHub repository](https://github.com/awaljanhematyar/atelier-north-interiors).
 
 ## Tooling
 
-Tailwind uses the official @tailwindcss/vite plugin and CSS import, with no legacy PostCSS or Tailwind JavaScript configuration. ESLint checks JavaScript, JSX, React Hooks and Fast Refresh. Vitest runs component smoke tests with React Testing Library, jest-dom matchers and jsdom. These tests verify setup only; browser, accessibility and feature coverage will grow with later phases.
+Tailwind uses the official @tailwindcss/vite plugin and CSS-first theme tokens, with no legacy PostCSS or Tailwind JavaScript configuration. ESLint checks JavaScript, JSX, React Hooks and Fast Refresh. Vitest uses React Testing Library, jest-dom and jsdom to test shell landmarks, route rendering, links, active state, mobile disclosure interactions, focus and 404 recovery. These tests do not replace real-browser or assistive-technology review.
+
+## Visual system and navigation
+
+The exact ivory, charcoal, taupe, beige and sage palette is defined in `src/index.css`, alongside spacing, responsive gutters, an 80rem container and fluid heading sizes. Cormorant Garamond and Inter are locally hosted with font-display: swap; font provenance and SIL licenses are in `public/fonts`. English Latin subsets are included. Taupe and sage serve as decorative accents; text uses charcoal against ivory/beige or the reverse.
+
+The desktop header is sticky from 1024px. Smaller layouts use an inline navigation disclosure with native link/button keyboard behavior, expanded state, Escape dismissal and focus return. It closes on navigation, focus leaving the header or a breakpoint change. The menu is not a modal dialog and does not trap focus. Route changes focus the main landmark; the skip link bypasses navigation. Motion is limited to CSS state transitions and disabled for reduced-motion preference.
 
 ## Approved scope and demo boundaries
 
-Future routes: Home, Projects, Project Details, Services, About, Testimonials, Consultation Booking, Contact and 404. Consultation requests and enquiry forms will be local simulations: nothing sent, reserved or stored persistently. Testimonials and project material must be clearly fictional or illustrative. No backend, database, payments or authentication is included.
+Route skeletons: `/`, `/projects`, `/projects/:slug`, `/services`, `/about`, `/testimonials`, `/consultation`, `/contact` and a catch-all 404. Project slugs currently display a labeled detail placeholder; real project existence validation belongs to the content phase. Consultation and Contact have no forms yet. Future consultation requests and enquiries will be local simulations: nothing sent, reserved or stored persistently. Testimonials and project material must be clearly fictional or illustrative. No backend, database, payments or authentication is included.
 
-The five specification documents remain unchanged. memory.md records verified work and approved review decisions. Premium UI, fonts, route pages and project content belong to later phases. The initial HTML is intentionally noindex until the publication/indexing policy is reviewed.
+The five specification documents remain unchanged. memory.md records verified work and approved review decisions. Full page content, photography, twelve fictional project records and interactive forms belong to later phases. HTML remains intentionally noindex until the publication/indexing policy is reviewed.
 
 ## Customization and future deployment
 
-Follow PRD.md, architecture.md, design.md, rules.md and phases.doc.md. Add brand tokens and fonts during Phase 1, then content in local data modules. Check image licensing before adding photography.
+Follow PRD.md, architecture.md, design.md, rules.md and phases.doc.md. Reuse the components in `src/components/ui` and the theme tokens when adding content. Check image licensing before adding photography.
 
 Vercel deployment is deferred. The future static deployment uses the Vite preset, `npm run build`, `dist` output and the supplied SPA rewrite. Verify asset serving and direct route refresh on a preview deployment. Client-rendered metadata and catch-all HTTP status behavior have SEO limitations; route metadata, sitemap, robots policy and social previews require later review.
 
@@ -52,4 +58,4 @@ Real enquiries or scheduling require a separately approved service integration, 
 
 ## Phase gate
 
-See memory.md for executed commands and actual results. Phase 0B and connection to the existing GitHub repository are complete; Phase 1 requires explicit approval. No deployment has been performed.
+See memory.md for executed commands and actual results. Phase 1 is complete; Phase 2 requires explicit approval. No deployment has been performed.

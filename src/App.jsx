@@ -1,9 +1,22 @@
+import { Route, Routes } from 'react-router-dom'
+import AppLayout from './components/layout/AppLayout.jsx'
+import RoutePage from './pages/RoutePage.jsx'
+import NotFoundPage from './pages/NotFoundPage.jsx'
+
 export default function App() {
   return (
-    <main className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-3xl font-semibold">Atelier North Interiors</h1>
-      <p className="mt-4">Phase 0B: project initialization shell.</p>
-      <p className="mt-2">Portfolio demo. Website pages and features are not implemented yet.</p>
-    </main>
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route index element={<RoutePage page="home" />} />
+        <Route path="projects" element={<RoutePage page="projects" />} />
+        <Route path="projects/:slug" element={<RoutePage page="project" />} />
+        <Route path="services" element={<RoutePage page="services" />} />
+        <Route path="about" element={<RoutePage page="about" />} />
+        <Route path="testimonials" element={<RoutePage page="testimonials" />} />
+        <Route path="consultation" element={<RoutePage page="consultation" />} />
+        <Route path="contact" element={<RoutePage page="contact" />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   )
 }

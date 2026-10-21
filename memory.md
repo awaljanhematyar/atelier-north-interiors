@@ -1,7 +1,7 @@
 # Project Memory: Atelier North Interiors
 
 ## Status
-Phase 0A review and Phase 0B initialization completed and verified on 2026-10-21 (Asia/Kabul). Phase 1 has not started. This file is a handoff log; the observations below describe the checks actually executed.
+Phase 0A, Phase 0B and Phase 1 completed and verified on 2026-10-21 (Asia/Kabul). Phase 2 has not started. This file is a handoff log; the observations below describe checks actually executed.
 
 ## Locked decisions
 - Brand: Atelier North Interiors.
@@ -16,7 +16,7 @@ Phase 0A review and Phase 0B initialization completed and verified on 2026-10-21
 
 ## Phase tracker
 - [x] Phase 0: specification and setup (0A review and 0B initialization)
-- [ ] Phase 1: visual system and shell
+- [x] Phase 1: visual system and shell
 - [ ] Phase 2: pages and content
 - [ ] Phase 3: interactions
 - [ ] Phase 4: accessibility and edge cases
@@ -24,7 +24,7 @@ Phase 0A review and Phase 0B initialization completed and verified on 2026-10-21
 - [ ] Phase 6: deployment and handoff
 
 ## Current task
-Phase 0B and GitHub connection complete. Stop and wait for explicit Phase 1 approval. The existing public GitHub repository is connected to local main. No new GitHub repository was created and nothing was deployed.
+Phase 1 complete. Stop and wait for explicit Phase 2 approval. The existing public GitHub repository is connected to local main. No new GitHub repository was created and nothing was deployed.
 
 ## Completed setup
 - Reread all six planning documents completely before editing; the root initially contained only these six files and no README.
@@ -111,7 +111,40 @@ Verification commands:
 - 2026-10-21: Completed approved Phase 0B only; added setup shell, tooling, tests, docs and verified results above. Existing specification files preserved. No access to unrelated projects.
 
 ## Next session handoff
-Wait for explicit Phase 1 approval. Then reread the six planning documents and README; implement visual tokens/fonts, responsive navigation/footer, shared primitives and route skeletons. Keep approved Consultation and Testimonials decisions above. Do not assume future pages, content, accessibility or deployment are complete.
+Wait for explicit Phase 2 approval. Then reread the planning documents and README; add the twelve fictional project records, licensed/fallback imagery and meaningful page content. Keep approved Consultation and Testimonials decisions above. Project slugs currently render placeholders, so data-backed invalid-slug handling remains pending. Forms, booking simulations and main interactions are deferred to later authorized phases. Do not assume full accessibility or deployment is complete.
+
+## Phase 1 implementation — 2026-10-21 (Asia/Kabul)
+- Read PRD, architecture, design, rules, phases, memory and README completely before edits. CODEX_MASTER_PROMPT.md was absent. Started from a clean main at 7e1be58c57297b49655d97e1ed3701477c95baaa.
+- Implemented exact brand color tokens, font families, a 4px spacing base, 640/768/1024/1280px breakpoints, 80rem container, responsive gutters/section spacing and clamp-based headings in Tailwind v4 CSS-first theme/global styles.
+- Locally hosted Latin variable WOFF2 subsets of Cormorant Garamond and Inter (400–600 normal), with font-display: swap, fallbacks, source provenance and SIL licenses. No new packages or package/lockfile changes.
+- Added layout: Brand, Header, Footer and AppLayout; UI: Container, Button, SectionHeading, PageHeader and EmptyState. Added separate navigation/page-skeleton data modules, shared RoutePage skeleton and NotFoundPage.
+- Sticky desktop navigation from 1024px; smaller widths use an inline disclosure with native keyboard behavior, aria-expanded/controls, hidden state, Escape focus return, automatic close on navigation/focus exit/breakpoint change. It is not a modal and does not trap focus.
+- Route changes focus main and reset scroll. Added skip link, semantic landmarks, visible focus, active navigation state, decorative icon hiding, motion reduction and persistent fictional-demo disclosure.
+- Implemented all nine route patterns: /, /projects, /projects/:slug, /services, /about, /testimonials, /consultation, /contact and *. Route skeletons have unique headings/document titles; custom 404 provides working home/project recovery links.
+- Updated index metadata and added an original SVG favicon after browser console checks found a missing default favicon request. No full pages, project records, testimonials, photography, contact forms or booking functionality were implemented.
+- Modified existing files: src/App.jsx, src/App.test.jsx, src/index.css, src/test/setup.js, index.html, README.md and memory.md. Added files under src/components/layout, src/components/ui, src/data/navigation.js, src/data/pageSkeletons.js, src/pages, public/fonts and public/favicon.svg. The five specification files remain unchanged.
+
+### Phase 1 verification
+All commands ran in D:\atelier-north-interiors using the session PATH prefix and explicit npm.cmd executable recorded above.
+
+```powershell
+& 'C:\Program Files\nodejs\npm.cmd' run build
+& 'C:\Program Files\nodejs\npm.cmd' run lint
+& 'C:\Program Files\nodejs\npm.cmd' test
+& 'C:\Program Files\nodejs\npm.cmd' run dev -- --host 127.0.0.1 --port 5175 --strictPort
+& 'C:\Program Files\nodejs\node.exe' tmp/phase1-browser.cjs
+git diff --check
+```
+
+- Final build after separating skeleton data: exit 0, 1954 modules, 3.75s; dist/index.html 0.71kB, CSS 14.22kB and JS 272.41kB before gzip. Vite printed a non-blocking CSS plugin timing diagnostic. Build artifacts remain ignored.
+- Final lint: exit 0, no errors or warnings. Final tests: exit 0, 15 tests passed in 1 file, 7.90s. Coverage includes landmarks/disclosure, all route patterns, navigation/active state, skip and route focus, mobile open/close/Escape/focus-exit/navigation, and 404 recovery.
+- Dev server: Vite 8.3.5 started successfully in 1397ms at http://127.0.0.1:5175/ using approved outside-sandbox execution. Stopped with Ctrl+C after checks (intentional interrupted exit 1).
+- Browser verification used the already bundled Playwright 1.62.1 runtime with headless Microsoft Edge; no browser/test dependency was added to the project. Temporary script, JSON results and screenshots live in ignored tmp/ and are not committed.
+- Browser result: all 36 combinations of nine routes and 375/768/1024/1440px passed overflow, single-main, heading and local-font checks. Keyboard Enter/Space/Tab/Escape, skip link, route focus, mobile auto-close, breakpoint reset, sticky desktop header, footer navigation, reduced-motion transitions and 404 home recovery passed. No page/console errors or failed resource requests in the final run.
+- Viewed home screenshots at all four widths and the keyboard-focused mobile menu. Increased footer disclosure text to 12px following visual review. Charcoal/ivory contrast measured 14.20:1; charcoal/beige 9.81:1 (also covers reversed primary-button colors). Sage/taupe remain decorative.
+- Browser-script debugging: fixed a locator tied to the changing menu label and added waits for React route updates. These were verification-script issues; the final run passed. Missing favicon was an app resource issue and was fixed.
+- No full assistive-technology audit, Safari/Firefox run or deployed Vercel checks performed. No WCAG certification claimed. HTML remains noindex.
+- Git diff, staged credential/path scan, normal commit and push verification are performed after this record is written; final commit hash and synchronization results are reported after execution rather than embedded self-referentially here.
 
 ## GitHub setup verification — 2026-10-21 (Asia/Kabul)
 - User explicitly authorized initialization, committing and pushing to the existing public repository https://github.com/awaljanhematyar/atelier-north-interiors.git.
