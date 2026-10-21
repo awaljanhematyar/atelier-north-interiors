@@ -12,6 +12,7 @@ export default defineConfig({
     'import.meta.env.VITE_INDEX_SITE': JSON.stringify(String(site.index)),
   },
   test: {
+    include: ['src/**/*.{test,spec}.{js,jsx,mjs}'],
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.js'],
     clearMocks: true,

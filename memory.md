@@ -21,10 +21,10 @@ Phases 0A, 0B, 1, 2, 3 and 4 were verified on 2026-10-21. Phase 5 local QA and o
 - [x] Phase 3: interactions
 - [x] Phase 4: accessibility and edge cases
 - [x] Phase 5: local QA and optimization, with documented limitations
-- [ ] Phase 6: deployment and handoff
+- [x] Phase 6: deployment and handoff, with documented limitations
 
 ## Current task
-Phase 5 local verification is finished; the interrupted work was preserved and the WebKit overflow corrected. Normal Git commit/push verification closes this task after this record is written. Stop before Phase 6 and wait for explicit approval. No deployment has occurred. See the final Phase 5 record for measured performance limits and remaining hosting/assistive-technology checks.
+Phase 6 live deployment, QA, screenshots and portfolio integration verified on 2026-10-22. Final release commit/push is the handoff operation; its resulting hash and synchronization are reported after execution. Keep indexing disabled. No additional phase authorized.
 
 ## Completed setup
 - Reread all six planning documents completely before editing; the root initially contained only these six files and no README.
@@ -411,3 +411,47 @@ git diff --check
 - Remaining measured limits: mobile Lighthouse LCP 2.763s exceeds the 2.5s goal; host CPU warnings and small lab samples limit conclusions; below-fold responsive delivery can improve further; no real-user INP/field data. Keep these observations when evaluating future changes rather than claiming every metric improved.
 - Remaining platform checks: actual Vercel deep URLs/404 status/cache/security headers, real-domain canonical/sitemap/social images and social-crawler format/caching behavior. Page bodies remain client-rendered, and no actual social-platform fetch compatibility is claimed. Modern native dialog/current Intl timezone data are still required.
 - Wait for explicit Phase 6 approval. Then confirm the actual HTTPS production origin and indexing policy, use Vite/npm ci/npm run build/dist and a Node 24.x patch satisfying package.json, keep preview builds noindex, and verify every hosted route/status/head/asset/robots/sitemap/social card before claiming deployment complete. No Vercel deployment, public-domain guess, search-engine submission, real form integration or Phase 6 work occurred here.
+
+## Phase 6 deployment and handoff — 2026-10-22 (Asia/Kabul)
+
+### Deployment
+- Read the approved request and planning documents. Preserved Phase 5 baseline 2f8a723cbe14df43ef94211a7b1e0da8a615aa56, all five specification documents, credits, project data, assets and dependencies. No unrelated project access.
+- Production: https://atelier-north-interiors.vercel.app. Origin-aware deployment dpl_77MJUuYQhVbTKpmcN5HsLxthgFbT READY; anonymous HTTP 200. Existing GitHub main connected for automatic deployments.
+- Authorized Vercel account awaljanhematyar-1472, team awaljanhematyar-1472s-projects; new Atelier project prj_3z5QpPXE5cjoZmwCoHRBt3n71hhi. Vite, Node 24.x, npm ci, npm run build, dist. Public production Config SITE_URL=https://atelier-north-interiors.vercel.app and INDEX_SITE=false. Indexing stays disabled.
+- Added explicit build fields to vercel.json, preserving rewrites/cache/security headers, plus .vercelignore excluding tooling, credentials, builds and documentation media from CLI uploads. CLI 65.0.0 isolated under ignored tmp; official device sign-in completed. Generated local credential file removed without reading its value; none committed. Initial unsupported API requests were rejected without changes and resolved through supported CLI commands.
+
+### Actual live QA and deliverables
+- Chromium 155: 197 responsive/interaction states at eight widths 320–1920, 100/200% root text, landscape, reduced motion, navigation, filters/history, gallery/modality/arrows/Escape/focus, FAQs and both demo forms' validation/completion/reset. Nineteen internal targets/raw heads, zero unexpected page/console/resource errors or external requests.
+- HTTP audit: nineteen valid routes 200 with unique metadata, en-CA, actual-origin canonical/social URLs and noindex; nineteen actual-origin sitemap entries; robots Disallow. Four unknown paths, including dotted paths and invalid project, custom HTTP 404/noindex without canonical. Twenty-five WebPs, two fonts and favicon successful; immutable hashed assets and security headers verified.
+- Live WebKit: sixteen navigation/text-size states plus both form-error states at 320px/200% text. Contact native selected text wraps, document width 320, body overflow visible, focus retained/solid outline. Full Firefox/WebKit 197-state runs remain Phase 5 local-preview results.
+- Forms remain local-only; existing unit transport/storage spies and live completion checks passed. No backend, messages, real appointments, analytics or personal-data persistence introduced.
+- Five actual live PNG captures visually reviewed: screenshots/desktop-home.png 1440x900; mobile-home.png 375x1000; desktop-projects.png 1440x1100; mobile-projects.png 375x1200; desktop-project-details.png 1440x1000.
+- walkthrough/atelier-north-interiors.webm: actual live browser recording, 1280x800, 36.56 seconds, browser loaded/decoded without video error. Includes navigation/filter/gallery/FAQ/sample demo booking. Optional ffmpeg inspections failed because its limited build lacks null muxer/JPEG encoder; browser decoding and container duration verified instead.
+- README includes actual links/screenshots/video, features, stack, installation/scripts, structure, testing/accessibility/demo boundaries, hosting/metadata and licensing. No source-code licence invented.
+
+### Personal portfolio
+- Verified authorized public repository awaljanhematyar/hematyar-professional-portfolio and existing Vercel project prj_UYE5CWiThOdjzxzVGNPgfimMfPS4/main connection. Related checkout isolated in ignored tmp/portfolio-integration, baseline 990826ae9737173961a64e94015796a86d66c233.
+- Five scoped files add exact requested case-study copy/category/four technologies, actual live/GitHub links and real screenshot-derived WebP cover. Source-managed merge preserves CMS records/order and yields to a same-slug CMS record. Existing design, other content, admin/auth/Supabase/contact and schema unchanged. No credentials or database migration.
+- Commit ea316568e653067b809cb6f13bf917b3ded09399, feat: add Atelier North Interiors case study. Normal push succeeded; clean main/origin/main 0/0. Existing automatic Vercel deployment dpl_738zrV5SUzpDBGWwXHYnqjGwNMh5 READY for that commit.
+- Live https://hematyar-professional-portfolio.vercel.app/projects/atelier-north-interiors. Local and live checks at 375/1440: unique card, requested text/stack, decoded image, detail navigation/direct refresh, correct Live Demo/GitHub, no overflow/page errors. Atelier destination 200.
+- Four native Node tests, existing npm run check (scaffold content check) and npm run build passed; Vite 7.3.7, 1651 modules, 13.38s. Locked npm ci reported zero vulnerabilities; manifests unchanged.
+
+### Exact verification and results
+Node 24.16.0/npm 11.13.0, explicit C:\Program Files\nodejs executables and PATH, working directory D:\atelier-north-interiors:
+- npm run build: exit 0, Vite 8.3.5, 1976 modules, 4.10s. CSS 29.01kB/6.75 gzip; entry JS 229.78kB plus shared 77.11kB. Informational timing advice only.
+- npm run lint: exit 0, no warnings/errors.
+- npm test: exit 0, 125 passed/nine files, 57.61s.
+- npm audit --json --fetch-retries=0 --fetch-timeout=30000: exit 0, zero known vulnerabilities/276 entries.
+- Intermediate full run failed because Vitest discovered the related checkout's native test under ignored tmp, despite all 125 application tests passing. Scoped include to src/**/*.{test,spec}.{js,jsx,mjs}; final nine-suite run above passed with no assertions removed.
+- node tmp/phase6-live.cjs; node tmp/phase6-http.mjs; node tmp/phase6-webkit-final.cjs: passed actual production.
+- node tmp/phase6-screenshots.cjs; node tmp/phase6-walkthrough.cjs; node tmp/phase6-video-verify.cjs: actual captures/recording/decoding above.
+- node tmp/phase6-portfolio-verify.cjs https://hematyar-professional-portfolio.vercel.app: live verification passed.
+- Related repo: node --test src/data/atelierNorth.test.mjs; npm run check; npm run build: passed.
+- Final release gates: scoped diff/path/secret review, git diff --check, normal commit/push, remote 0/0 and Git-triggered production deployment verification. Atelier commit message: chore: complete deployment and portfolio handoff. Resulting hash/synchronization are independently verified after this log is committed and reported in the final response, avoiding a self-referential hash.
+
+### Limitations and handoff
+- Production remains deliberately noindex; no search-engine submission. Social metadata/image responses verified, actual platform card validators not run. Bodies require client JavaScript.
+- No new live Lighthouse/field scores: archived Phase 5 local performance 94 mobile/100 desktop, SEO 66 from deliberate noindex; mobile LCP 2.763s exceeds 2.5s goal. Do not present as live metrics.
+- Screen readers, physical Safari/iOS/Android, native zoom, social validators and field INP unverified; no WCAG certification. Current dialog/Intl timezone support required.
+- Portfolio CMS/backend preserved, not comprehensively re-audited; same-slug CMS entry takes priority over source-managed case study.
+- Phase 6 only; no further feature work authorized. Final commit/push and deployment checks are reported separately after execution.
