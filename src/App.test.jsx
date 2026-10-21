@@ -20,7 +20,7 @@ describe('application shell and routes', () => {
   it.each([
     ['/', 'Spaces That Tell Your Story.'],
     ['/projects', 'Projects'],
-    ['/projects/sample-slug', 'Project details'],
+    ['/projects/cedar-and-light', 'Cedar & Light'],
     ['/services', 'Services'],
     ['/about', 'About Atelier North'],
     ['/testimonials', 'Testimonials'],
@@ -82,7 +82,7 @@ describe('application shell and routes', () => {
     expect(toggle).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('provides working 404 recovery and keeps forms out of Phase 1', () => {
+  it('provides working 404 recovery', () => {
     renderApp('/not-a-page')
     expect(screen.getByText('404 / A little off plan')).toBeVisible()
     expect(screen.getByRole('link', { name: 'Explore projects' })).toHaveAttribute('href', '/projects')

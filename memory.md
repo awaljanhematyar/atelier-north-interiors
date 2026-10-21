@@ -1,7 +1,7 @@
 # Project Memory: Atelier North Interiors
 
 ## Status
-Phase 0A, Phase 0B and Phase 1 completed and verified on 2026-10-21 (Asia/Kabul). Phase 2 has not started. This file is a handoff log; the observations below describe checks actually executed.
+Phases 0A, 0B, 1 and 2 completed and verified on 2026-10-21 (Asia/Kabul). Phase 3 has not started. This file is a handoff log; the observations below describe checks actually executed.
 
 ## Locked decisions
 - Brand: Atelier North Interiors.
@@ -17,14 +17,14 @@ Phase 0A, Phase 0B and Phase 1 completed and verified on 2026-10-21 (Asia/Kabul)
 ## Phase tracker
 - [x] Phase 0: specification and setup (0A review and 0B initialization)
 - [x] Phase 1: visual system and shell
-- [ ] Phase 2: pages and content
+- [x] Phase 2: pages and content
 - [ ] Phase 3: interactions
 - [ ] Phase 4: accessibility and edge cases
 - [ ] Phase 5: QA
 - [ ] Phase 6: deployment and handoff
 
 ## Current task
-Phase 1 complete. Stop and wait for explicit Phase 2 approval. The existing public GitHub repository is connected to local main. No new GitHub repository was created and nothing was deployed.
+Phase 2 complete. Stop and wait for explicit Phase 3 approval. The existing public GitHub repository is connected to local main. No new GitHub repository was created and nothing was deployed.
 
 ## Completed setup
 - Reread all six planning documents completely before editing; the root initially contained only these six files and no README.
@@ -111,7 +111,7 @@ Verification commands:
 - 2026-10-21: Completed approved Phase 0B only; added setup shell, tooling, tests, docs and verified results above. Existing specification files preserved. No access to unrelated projects.
 
 ## Next session handoff
-Wait for explicit Phase 2 approval. Then reread the planning documents and README; add the twelve fictional project records, licensed/fallback imagery and meaningful page content. Keep approved Consultation and Testimonials decisions above. Project slugs currently render placeholders, so data-backed invalid-slug handling remains pending. Forms, booking simulations and main interactions are deferred to later authorized phases. Do not assume full accessibility or deployment is complete.
+Wait for explicit Phase 3 approval. Then reread the planning documents and README; implement category filtering, next/previous navigation, interactive accessible gallery, FAQ accordion and validated local-only enquiry/consultation simulations. Use the existing projects/category data, static gallery/FAQ structures and disabled form layouts. Keep consent, Vancouver timezone and no-real-submission decisions above. Do not assume a full accessibility audit or deployment is complete.
 
 ## Phase 1 implementation — 2026-10-21 (Asia/Kabul)
 - Read PRD, architecture, design, rules, phases, memory and README completely before edits. CODEX_MASTER_PROMPT.md was absent. Started from a clean main at 7e1be58c57297b49655d97e1ed3701477c95baaa.
@@ -163,3 +163,50 @@ git diff --check
 - Sandbox Git index writes and networking were denied; approved outside-sandbox commands completed staging, commit, push and remote verification. Git warned of normal Windows LF/CRLF normalization; no specification content was edited.
 - Updated README's Git status and this handoff record after the verified initial push. This documentation update is intended as a separate follow-up commit; its final hash and final push/sync verification are reported to the user after execution, avoiding a self-referential commit hash in this file.
 - No application feature changes, no access to unrelated projects and no Phase 1 work. Remaining local environment notes above still apply.
+
+## Phase 2 implementation — 2026-10-21 (Asia/Kabul)
+- Read CODEX_MASTER_PROMPT.md if present (absent), PRD, architecture, design, rules, phases, memory and README before edits. Started from clean main at e7fee9c1735c5a93eb2781c71090ba72fb8aa5b1.
+- Preserved Phase 1 tokens, local fonts, shell, navigation, focus management and reduced-motion rules. Added content.css through a single import in index.css; no dependency or lockfile changes.
+- Added twelve fictional concept records in src/data/projects.js, three per residential/commercial/hospitality/renovations category. Each has a unique slug, title, explicitly imagined location, original brief, design concept, proposed scope, materials and three reference image records with alt text, source, photographer and licence URL.
+- Implemented Home (editorial hero, introduction, featured projects, services overview, philosophy and consultation CTA); Projects (all twelve cards and static category index); all twelve dynamic details (hero, narrative, concept, scope/materials, static reference gallery and two related previews); Services (four offerings, process and static FAQs); About (fictional story/values/approach); Testimonials (three clearly labelled fictional samples).
+- Contact and Consultation now have labelled form previews in disabled fieldsets with disabled submit buttons and explicit no-collection/no-submission notices. Consultation includes preferred date/time and America/Vancouver context, with no availability or reservation claims. Contact uses a reserved .example email and no real office address.
+- All fictional work, testimonials and illustrative photography are disclosed at relevant content points as well as the existing footer. No credentials, awards, verified reviews, real clients, fees, real submissions, backend or database added.
+- Unknown project slugs use the existing custom 404. Removed obsolete RoutePage.jsx and pageSkeletons.js. Category filtering, FAQ accordion, lightbox/gallery controls, next/previous navigation, form validation and demo confirmation remain Phase 3 work.
+- Created: src/data/projects.js, projects.test.js, studio.js; src/pages/HomePage.jsx, ProjectsPage.jsx, ProjectDetailPage.jsx, ServicesPage.jsx, AboutPage.jsx, TestimonialsPage.jsx, EnquiryPage.jsx, CorePages.test.jsx; src/components/features/ProjectCard.jsx, ConsultationCTA.jsx; src/components/ui/Photo.jsx; src/hooks/usePageTitle.js; src/content.css; IMAGE_CREDITS.md; 24 local WebP assets under public/images.
+- Modified: src/App.jsx, src/App.test.jsx, src/index.css, README.md and memory.md. Deleted only the two obsolete skeleton files listed above. PRD.md, architecture.md, design.md, rules.md and phases.doc.md remain unchanged.
+
+### Photography and licensing
+- Checked the official Pexels License and individual source pages before incorporating images. Free personal/commercial use and modification are allowed; attribution is not required, but is displayed beside photos. Source register, photographers, checked date, restrictions and download recipe are in IMAGE_CREDITS.md.
+- Twelve independent photos, two responsive WebP widths each (640 and 1600): 24 assets totalling 2,488,136 bytes. Downloaded through Pexels image resizing/compression with approved outside-sandbox network access after sandbox DNS failed.
+- Local images use srcSet/sizes, lazy supporting-image loading, eager hero loading, descriptive alt text and an accessible in-layout fallback. No external image requests at runtime.
+- Photos are separate visual references and may be reused across concepts; galleries expressly do not represent one real completed project. No studio authorship, client relationship or endorsement is implied.
+
+### Phase 2 verification
+PowerShell working directory: D:\atelier-north-interiors. Used the session PATH prefix and explicit Node/npm executable paths recorded earlier.
+
+```powershell
+& 'C:\Program Files\nodejs\npm.cmd' run build
+& 'C:\Program Files\nodejs\npm.cmd' run lint
+& 'C:\Program Files\nodejs\npm.cmd' test
+& 'C:\Program Files\nodejs\npm.cmd' run dev -- --host 127.0.0.1 --port 5176 --strictPort
+& 'C:\Program Files\nodejs\node.exe' tmp/phase2-browser.cjs
+git diff --check
+```
+
+- Final build: exit 0, Vite 8.3.5, 1964 modules, 4.32s. HTML 0.71kB, CSS 23.98kB, JavaScript 315.47kB (96.22kB gzip). Assets in public are copied into dist. No deployment performed.
+- Final lint: exit 0, no errors or warnings.
+- Final tests: exit 0, 47 passed in 3 files, 23.51s. Tests cover all twelve complete project records, unique slugs/category counts, local WebP signatures and responsive variants, detail content for every project, unknown slugs, core routes, project links, navigation/focus, fictional testimonials, static FAQs, disabled labelled forms and image fallback/recovery. Vitest printed informational jsdom environment timing advice, not a test failure.
+- First test run exposed an accessible-heading whitespace issue at a hero line break (fixed). Corrected two test harness issues: used NodeURL to avoid Vite asset-URL transformation, and scoped the static-FAQ assertion to the FAQ region rather than the header menu. All failures resolved before the final passing run.
+- Dev server started successfully in 1747ms at http://127.0.0.1:5176/, using approved outside-sandbox execution. Stopped with Ctrl+C after verification (intentional interrupted exit 1).
+- Used bundled Playwright with headless Microsoft Edge, without adding a package. The ignored tmp/phase2-browser.cjs checked 51 layouts: ten representative routes at 375/768/1024/1440px plus the other eleven valid details at 1440px.
+- Browser results: no horizontal overflow, broken/missing-alt images, duplicate h1 or unexpected console/page/resource errors during normal navigation. All project details loaded; card navigation, route focus, mobile menu navigation, disabled form inputs/buttons, homepage section link and reduced motion passed.
+- Intentionally blocked a photo request to verify accessible fallback rendering; the resulting deliberate network error is separate from normal-navigation checks. Unit tests also verify recovery when a different image source renders.
+- Additional final 1440px browser anchor check: sticky header bottom 113px, selected-projects top 128.1875px, so heading/section are not obscured.
+- Viewed the 375px home, 768px consultation, 1440px home/detail screenshots and the twelve-image contact sheet. Remaining generated screenshots/results are local ignored QA artifacts, not repository content.
+- No Safari/Firefox run, full screen-reader audit, automated WCAG certification or deployed deep-link verification performed. Existing noindex policy remains.
+
+### Phase 2 handoff and Git
+- No known remaining Phase 2 application failures. Future enabled form borders/error/consent handling, date validation and simulated confirmations require Phase 3 work; no real booking/submission is implemented.
+- Remote-history check, staged secret/path scan, commit and normal push are performed after this verified implementation record is written. Final commit hash and remote synchronization are reported after execution to avoid self-referential hashes here.
+- Requested commit message: feat: build interior design pages and project content.
+- No unrelated project access, no force push and no Phase 3 work.
