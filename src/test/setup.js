@@ -13,4 +13,14 @@ Object.defineProperty(window, 'matchMedia', {
 })
 window.scrollTo = vi.fn()
 
+// jsdom does not implement native dialog modality. Real-browser QA verifies inertness.
+Object.defineProperty(HTMLDialogElement.prototype, 'showModal', {
+  configurable: true,
+  value: function () { this.setAttribute('open', '') },
+})
+Object.defineProperty(HTMLDialogElement.prototype, 'close', {
+  configurable: true,
+  value: function () { this.removeAttribute('open') },
+})
+
 afterEach(cleanup)

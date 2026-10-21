@@ -13,7 +13,7 @@ export const process = [
 export const faqs = [
   { question: 'Is Atelier North a real design practice?', answer: 'No. Atelier North Interiors is a fictional portfolio demonstration. Its studio story, service descriptions and project briefs are illustrative, and it does not accept real commissions.' },
   { question: 'Are the projects completed client work?', answer: 'No. They are fictional concept studies. Licensed stock photographs illustrate a mood or material direction; they do not document work by this studio.' },
-  { question: 'Can I book a consultation through this site?', answer: 'The consultation layout is a preview only. No availability is shown, no details are sent and no appointment is reserved.' },
+  { question: 'Can I book a consultation through this site?', answer: 'The consultation form is a local demonstration. It does not check availability, send details or reserve appointments.' },
   { question: 'How would a real project scope be agreed?', answer: 'A real engagement would need a written brief, a defined scope, an agreed CAD fee proposal and appropriate professional coordination. No fee or service commitment is offered by this demonstration.' },
 ]
 export const values = [

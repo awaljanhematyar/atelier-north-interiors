@@ -1,6 +1,6 @@
 # Atelier North Interiors
 
-A fictional Vancouver interior design studio portfolio demo built with React, Vite and JavaScript JSX. Phase 2 adds editorial core pages, twelve fictional project briefs and licensed local reference photography to the existing visual system and responsive shell. Advanced interactions remain pending.
+A fictional Vancouver interior design studio portfolio demo built with React, Vite and JavaScript JSX. Phase 3 adds portfolio filters, an accessible reference gallery, project navigation, FAQ accordion and local-only demo enquiry/consultation forms to the existing editorial pages.
 
 ## Requirements
 
@@ -26,15 +26,15 @@ On Windows, if command resolution selects an inaccessible system shim, use the a
 - `src/pages`: Home, Projects, dynamic Project Details, Services, About, Testimonials, shared Contact/Consultation layout and custom not-found page.
 - `src/data`: twelve project records, category labels, studio/services/process/FAQ/testimonial copy and navigation.
 - `src/assets`, `public`: bundled and directly served assets.
-- `src/hooks`, `src/utils`: reusable hooks and pure utilities when needed.
+- `src/hooks`, `src/utils`: page-title hook, pure portfolio selection/navigation helpers and demo validation/date utilities.
 - `src/test`: Vitest setup; tests live beside their subjects.
-- `src/App.jsx`, `main.jsx`, `index.css`, `content.css`: route definitions, React/router entry, preserved Tailwind theme/shell and editorial content styles.
+- `src/App.jsx`, `main.jsx`, `index.css`, `content.css`, `interactions.css`: routes, React entry, preserved theme/shell, editorial styles and interaction states.
 
 Empty directories contain .gitkeep files to preserve the approved structure in version control. The project is tracked on `main` in the existing public [GitHub repository](https://github.com/awaljanhematyar/atelier-north-interiors).
 
 ## Tooling
 
-Tailwind uses the official @tailwindcss/vite plugin and CSS-first theme tokens, with no legacy PostCSS or Tailwind JavaScript configuration. ESLint checks JavaScript, JSX, React Hooks and Fast Refresh. Vitest uses React Testing Library, jest-dom and jsdom to test shell navigation/accessibility, project data and local WebP integrity, all twelve detail routes, invalid slugs, card navigation, static FAQ/testimonial content, disabled form previews and image fallback/recovery. These tests do not replace real-browser or assistive-technology review.
+Tailwind uses the official @tailwindcss/vite plugin and CSS-first theme tokens, with no legacy PostCSS or Tailwind JavaScript configuration. ESLint checks JavaScript, JSX, React Hooks and Fast Refresh. Vitest uses React Testing Library, jest-dom and jsdom to test existing shell/content coverage plus filters, gallery controls/focus, navigation boundaries, accordions, validation, local-only completion and reset. Dialog methods are stubbed only in jsdom; real-browser checks verify native modality and background isolation. No dependencies were added for Phase 3.
 
 ## Visual system and navigation
 
@@ -44,9 +44,17 @@ The desktop header is sticky from 1024px. Smaller layouts use an inline navigati
 
 ## Approved scope and demo boundaries
 
-Core routes: `/`, `/projects`, `/projects/:slug`, `/services`, `/about`, `/testimonials`, `/consultation`, `/contact` and a catch-all 404. Unknown project slugs show the custom not-found page. Each category has three fictional project records with three independent reference photos per concept. Related previews use the same category. There is no category-filter UI, next/previous interaction, gallery viewer or FAQ accordion yet.
+Core routes: `/`, `/projects`, `/projects/:slug`, `/services`, `/about`, `/testimonials`, `/consultation`, `/contact` and a catch-all 404. Unknown project slugs show the custom not-found page. The twelve project records and image credits are unchanged.
 
-Contact and Consultation contain labelled fields inside disabled fieldsets, visible preview notices and disabled submit buttons. They collect, persist and submit nothing. Consultation preferences use Vancouver time (`America/Vancouver`), with no live availability or reservations. Contact details use a reserved `.example` address and no real office location. Phase 3 will add local demo interactions and validation only; real integrations require separate approval.
+Category buttons show accurate counts and store only the selected category in a query parameter, supporting direct links and browser history without reloads. Filter changes preserve keyboard focus and scroll. All Projects is the default; unknown URL categories safely display all concepts. Project navigation follows data order and does not wrap at the first/last concept. Related previews prioritize the same category, then fill from the remaining source order.
+
+Gallery triggers open a native modal dialog. Previous/next images wrap; Left/Right arrows browse, Escape/Close dismiss, Tab stays in the dialog and focus returns to the opener. Background interaction and scrolling are blocked while open. Missing/failed images retain an accessible fallback. Service FAQs use independently controlled buttons with expanded states and associated answer IDs.
+
+Contact and Consultation are controlled local React demos. Required fields, trimmed empty values, basic email format, category and acknowledgment are validated; Consultation additionally validates a real calendar date, no dates before today in Vancouver, and an allowed time window. Errors retain entries, announce feedback and focus the first invalid field. Completion is immediate, guarded against duplicates, and clears entered data. Start again/Clear form resets state and restores focus to the name field.
+
+No form fetch, email, calendar, backend, storage write or real reservation occurs. Enter sample values only: input exists temporarily in component memory until completion, reset or navigation. Consultation confirmation explicitly says: “This is a demo. No appointment has been booked.” Contact confirmation says no message has been delivered. Contact information uses a reserved `.example` address and no real office location.
+
+Dates use `Intl.DateTimeFormat` with `America/Vancouver`, not the device's local calendar or a hard-coded offset. Keep browser/runtime timezone data current. B.C. adopted permanent daylight time in 2026; the earlier seasonal-time copy was corrected after checking [the official provincial notice](https://news.gov.bc.ca/releases/2026AG0013-000209). This demo does not model appointment duration, availability or a scheduling service.
 
 Testimonials are explicitly fictional examples at page and quotation level, without real identities, ratings or verified-review claims. No backend, database, payments or authentication is included.
 
@@ -66,4 +74,4 @@ Real enquiries or scheduling require a separately approved service integration, 
 
 ## Phase gate
 
-See memory.md for executed commands and actual results. Phase 2 is complete; Phase 3 requires explicit approval. No deployment has been performed.
+See memory.md for executed commands and actual results. Phase 3 is complete; Phase 4 requires explicit approval. No deployment has been performed.

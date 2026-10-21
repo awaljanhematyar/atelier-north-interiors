@@ -1,7 +1,7 @@
 # Project Memory: Atelier North Interiors
 
 ## Status
-Phases 0A, 0B, 1 and 2 completed and verified on 2026-10-21 (Asia/Kabul). Phase 3 has not started. This file is a handoff log; the observations below describe checks actually executed.
+Phases 0A, 0B, 1, 2 and 3 completed and verified on 2026-10-21 (Asia/Kabul). Phase 4 has not started. This file is a handoff log; the observations below describe checks actually executed.
 
 ## Locked decisions
 - Brand: Atelier North Interiors.
@@ -18,13 +18,13 @@ Phases 0A, 0B, 1 and 2 completed and verified on 2026-10-21 (Asia/Kabul). Phase 
 - [x] Phase 0: specification and setup (0A review and 0B initialization)
 - [x] Phase 1: visual system and shell
 - [x] Phase 2: pages and content
-- [ ] Phase 3: interactions
+- [x] Phase 3: interactions
 - [ ] Phase 4: accessibility and edge cases
 - [ ] Phase 5: QA
 - [ ] Phase 6: deployment and handoff
 
 ## Current task
-Phase 2 complete. Stop and wait for explicit Phase 3 approval. The existing public GitHub repository is connected to local main. No new GitHub repository was created and nothing was deployed.
+Phase 3 complete. Stop and wait for explicit Phase 4 approval. The existing public GitHub repository is connected to local main. No new GitHub repository was created and nothing was deployed.
 
 ## Completed setup
 - Reread all six planning documents completely before editing; the root initially contained only these six files and no README.
@@ -111,7 +111,7 @@ Verification commands:
 - 2026-10-21: Completed approved Phase 0B only; added setup shell, tooling, tests, docs and verified results above. Existing specification files preserved. No access to unrelated projects.
 
 ## Next session handoff
-Wait for explicit Phase 3 approval. Then reread the planning documents and README; implement category filtering, next/previous navigation, interactive accessible gallery, FAQ accordion and validated local-only enquiry/consultation simulations. Use the existing projects/category data, static gallery/FAQ structures and disabled form layouts. Keep consent, Vancouver timezone and no-real-submission decisions above. Do not assume a full accessibility audit or deployment is complete.
+Wait for explicit Phase 4 approval. Then reread the planning documents and README; extend edge-case and accessibility review across project/filter empty states, image failures, keyboard/assistive technology, navigation boundaries, form consent/error announcements and reduced motion. Consider additional Safari/Firefox and screen-reader coverage. Do not change the local-only privacy model or assume deployment is complete.
 
 ## Phase 1 implementation — 2026-10-21 (Asia/Kabul)
 - Read PRD, architecture, design, rules, phases, memory and README completely before edits. CODEX_MASTER_PROMPT.md was absent. Started from a clean main at 7e1be58c57297b49655d97e1ed3701477c95baaa.
@@ -210,3 +210,53 @@ git diff --check
 - Remote-history check, staged secret/path scan, commit and normal push are performed after this verified implementation record is written. Final commit hash and remote synchronization are reported after execution to avoid self-referential hashes here.
 - Requested commit message: feat: build interior design pages and project content.
 - No unrelated project access, no force push and no Phase 3 work.
+
+## Phase 3 implementation — 2026-10-21 (Asia/Kabul)
+- Read the attached user request and required documents before editing; CODEX_MASTER_PROMPT.md was absent. Inspected the implementation and verified clean main at 9494ec26af51adedae464a7aa5d8a49524f3325c.
+- Added All Projects plus four category buttons with aria-pressed, accurate 12/3 counts, live result status and an empty-state branch. Category query parameters support direct links/history without reloads; unknown categories safely show all. Query-only changes preserve filter focus/scroll; pathname navigation retains main focus/reset behavior.
+- Added native showModal gallery with full descriptions/credits, cyclic previous/next images, Left/Right keyboard arrows, Escape/visible close, Tab boundary management, focus restoration, modal background isolation and scroll locking. Missing/failed images have accessible fallback; project changes reset gallery state.
+- Added Previous/Next Project links in source order with non-actionable explanations at first/last boundaries. Related previews prioritize the same category, then fill remaining slots in source order.
+- Converted existing FAQs to independently expandable buttons with aria-expanded, aria-controls and labelled hidden answer panels. Existing questions/content preserved except the obsolete consultation preview-only description, updated to match the local demo.
+- Activated shared controlled Contact/Consultation demo forms with required name/email/category/message/acknowledgment; consultation adds date/time preferences. Validation checks trimmed empty values, basic email format, allowed categories/windows, true calendar dates/leap years and dates not before Vancouver today.
+- Errors retain input, identify fields with aria-invalid/describedby, announce an error summary and focus the first invalid field. Completion is synchronous, duplicate-guarded and clears values; Start again/Clear form reset and focus the full-name field. Switching form routes resets form state.
+- Exact consultation confirmation: This is a demo. No appointment has been booked. Contact states no message has been delivered. No form network requests, persistence, email, calendar, backend, artificial delay or spinner. Sample data stays only in component memory until cleared or unmounted.
+- Form fields now have charcoal borders, 16px text, visible focus, dashed invalid state and textual errors. Gallery/filter/FAQ controls retain the brand palette and reduced-motion rules. Clipped the unfocused skip link to avoid off-viewport full-page capture artifacts while preserving keyboard access.
+- Created: components/features/{DemoEnquiryForm,FAQAccordion,GalleryDialog,ProjectFilters,ProjectNavigation}.jsx; components/ui/FormField.jsx; interactions.css; utils/{portfolio,validation}.js and their tests; pages/Interactions.test.jsx.
+- Modified: pages/{ProjectsPage,ProjectDetailPage,ServicesPage,EnquiryPage,CorePages.test}.jsx; components/layout/AppLayout.jsx; components/ui/Photo.jsx; data/studio.js; test/setup.js; index.css; README.md; memory.md.
+- Preserved all twelve project records, IMAGE_CREDITS.md, photography/fonts, specification documents and dependency manifests. No packages added, no unrelated project access, no redesign or Phase 4 work.
+
+### Vancouver date finding
+- Date tests initially assumed a November 2026 return to UTC-8. Runtime Intl correctly retained UTC-7. Verified B.C.'s 2026 permanent daylight-time change against https://news.gov.bc.ca/releases/2026AG0013-000209 and https://www2.gov.bc.ca/gov/content/governments/celebrating-british-columbia/daylight-saving-time.
+- Corrected the test to cover historical 2025 winter boundaries and current 2026 boundaries, and removed the old seasonal-time claim in Contact copy. Calculation still uses America/Vancouver through Intl, with no hard-coded offset. Browser/runtime timezone data must remain current.
+
+### Phase 3 verification
+Working directory for commands: D:\atelier-north-interiors. Used the session PATH prefix from earlier setup records.
+
+```powershell
+& 'C:\Program Files\nodejs\npm.cmd' run build
+& 'C:\Program Files\nodejs\npm.cmd' run lint
+& 'C:\Program Files\nodejs\npm.cmd' test
+& 'C:\Program Files\nodejs\npm.cmd' run dev -- --host 127.0.0.1 --port 5177 --strictPort
+& 'C:\Program Files\nodejs\node.exe' tmp/phase3-browser.cjs
+git diff --check
+```
+
+- Final build: exit 0, Vite 8.3.5, 1973 modules, 4.13s. HTML 0.71kB, CSS 28.48kB (6.62kB gzip), JS 326.15kB (99.96kB gzip). A non-blocking CSS plugin timing diagnostic was printed.
+- Final lint: exit 0, no errors or warnings.
+- Final tests: exit 0, 85 passed across 6 files, 44.26s. Existing coverage retained, with assertions for previously static/disabled features updated for their newly approved behavior. Added filtering, galleries/focus/fallback, neighbours/related ordering, all FAQ controls, contact/consultation errors/success/reset/duplicate guard, no fetch/XHR/storage writes, leap years and named-zone date boundaries.
+- jsdom lacks modal dialog methods; test-only stubs cover open/close while real-browser checks verify native modality, background isolation and keyboard focus. Vitest's jsdom timing advice is informational. No tests were deleted.
+- Initial suite had 84 passes and one stale winter-time expectation; corrected after verifying the provincial change. Subsequent suites passed all 85.
+- Dev server started successfully in 2382ms at http://127.0.0.1:5177/ with approved outside-sandbox execution; stopped via Ctrl+C after checks (intentional interrupted exit 1).
+- Bundled Playwright/headless Microsoft Edge final browser pass: 32 responsive state checks (filters, gallery, navigation, FAQ, both forms' error/success states at 375/768/1024/1440px). No horizontal overflow or unexpected console/page/resource errors.
+- Browser verified Enter/Space filters, active counts, query/history behavior and retained focus; native modal :modal state, blocked background focus, internal Tab/Shift+Tab cycling, arrows/Escape/close and focus return; first/last/middle project navigation; FAQ keyboard toggling; invalid email/past-date feedback; input retention, confirmation, empty reset and focus.
+- Observed zero external requests, zero form-completion requests and empty local/session storage in the browser. Unit spies likewise saw no fetch, XMLHttpRequest send or Storage.setItem calls during completion.
+- Initial browser verification had a script timing race when categories both returned three cards; corrected the script to wait for the active category rather than the unchanged count. Final browser passes succeeded.
+- Viewed responsive gallery/filter/form screenshots; regenerated clean captures after scroll reset and skip-link clipping. Scripts, results and screenshots are in ignored tmp/ and are not staged.
+- Source scan excluding tests found no localStorage/sessionStorage, fetch, XMLHttpRequest, sendBeacon or setTimeout usage in application code.
+
+### Limitations, Git and next phase
+- Modern browser native dialog support and current Intl timezone data are required. No full screen-reader audit, Safari/Firefox verification or WCAG certification claimed. Email checking is basic client-side demo validation, not server validation or address verification.
+- No real enquiries, availability, appointments or confirmation emails. No data survives reset/completion/navigation by design. No deployment performed.
+- Phase 4 recommendations: broaden assistive-technology/cross-browser testing, review unusual input and missing-data scenarios, empty filters, keyboard order and image failure states. Wait for explicit approval before that work.
+- Final staged path/credential scan, commit and normal push follow this verified record. Report the resulting commit hash and local/remote synchronization to the user after execution, avoiding a self-referential commit hash here.
+- Requested commit: feat: implement interactive portfolio and demo forms. No force push or history rewrite.

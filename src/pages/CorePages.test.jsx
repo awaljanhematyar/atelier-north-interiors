@@ -34,31 +34,34 @@ describe('Phase 2 content and core pages', () => {
     expect(screen.getByRole('main')).toHaveFocus()
   })
 
-  it('presents static service FAQs and clear fictional testimonials', () => {
+  it('presents accessible service FAQs and clear fictional testimonials', () => {
     const view = renderPage('/services')
     expect(screen.getByRole('heading', { name: 'Residential Interior Design' })).toBeVisible()
     expect(screen.getByRole('heading', { name: 'Is Atelier North a real design practice?' })).toBeVisible()
-    expect(within(screen.getByRole('region', { name: 'Before we begin.' })).queryByRole('button')).not.toBeInTheDocument()
+    const question = screen.getByRole('button', { name: 'Is Atelier North a real design practice?' })
+    expect(question).toHaveAttribute('aria-expanded', 'false')
+    fireEvent.click(question)
+    expect(question).toHaveAttribute('aria-expanded', 'true')
     view.unmount()
     renderPage('/testimonials')
     expect(screen.getAllByText('Fictional example')).toHaveLength(3)
     expect(screen.getByText(/not verified customer reviews/)).toBeVisible()
   })
 
-  it.each(['/contact', '/consultation'])('%s has labelled, disabled demo fields and no working submission', path => {
+  it.each(['/contact', '/consultation'])('%s has labelled demo fields and transparent local-only submission', path => {
     renderPage(path)
     const form = within(screen.getByRole('form'))
-    for (const name of [/^Name/, /^Email/, /^Project category/]) expect(form.getByLabelText(name)).toBeDisabled()
+    for (const name of [/^Full name/, /^Email/, /^Project category/]) expect(form.getByLabelText(name)).toBeEnabled()
     expect(form.getByRole('checkbox')).toBeRequired()
-    expect(form.getByRole('checkbox')).toBeDisabled()
-    expect(form.getByRole('button')).toBeDisabled()
-    expect(screen.getByText(/Nothing is collected, stored or sent/)).toBeVisible()
+    expect(form.getByRole('checkbox')).toBeEnabled()
+    expect(form.getByRole('button', { name: /Try the/ })).toBeEnabled()
+    expect(screen.getByText(/Nothing is stored or sent/)).toBeVisible()
     if (path === '/consultation') {
-      expect(form.getByLabelText(/^Preferred date/)).toBeDisabled()
-      expect(form.getByLabelText(/^Preferred time window/)).toBeDisabled()
-      expect(form.getByLabelText(/^Project brief/)).toBeDisabled()
+      expect(form.getByLabelText(/^Preferred date/)).toBeEnabled()
+      expect(form.getByLabelText(/^Preferred time window/)).toBeEnabled()
+      expect(form.getByLabelText(/^Project brief/)).toBeEnabled()
       expect(screen.getByText(/America\/Vancouver/)).toBeVisible()
-    } else expect(form.getByLabelText(/^Message/)).toBeDisabled()
+    } else expect(form.getByLabelText(/^Message/)).toBeEnabled()
   })
 
   it('replaces failed photos accessibly and recovers when a different source is rendered', () => {

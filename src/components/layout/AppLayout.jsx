@@ -5,16 +5,16 @@ import Footer from './Footer.jsx'
 
 export default function AppLayout() {
   const location = useLocation()
-  const previousLocation = useRef(location.key)
+  const previousLocation = useRef(location.pathname)
   const mainRef = useRef(null)
 
   useEffect(() => {
-    if (previousLocation.current !== location.key) {
+    if (previousLocation.current !== location.pathname) {
       mainRef.current?.focus()
       window.scrollTo({ top: 0, behavior: 'instant' })
-      previousLocation.current = location.key
+      previousLocation.current = location.pathname
     }
-  }, [location.key])
+  }, [location.pathname])
 
   return (
     <div className="app-shell">
