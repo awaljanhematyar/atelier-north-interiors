@@ -40,7 +40,7 @@ export default function Header() {
             </ul>
           </nav>
           <Button to="/consultation" className="desktop-consultation" variant="outline">Consultation <ArrowUpRight size={15} aria-hidden="true" /></Button>
-          <button ref={toggleRef} type="button" className="menu-toggle" aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? 'Close navigation' : 'Open navigation'} onClick={() => setOpen(!open)}>
+          <button ref={toggleRef} type="button" className="menu-toggle" aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? 'Close navigation' : 'Menu — Open navigation'} onClick={() => setOpen(!open)}>
             <span>{open ? 'Close' : 'Menu'}</span>
             {open ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>

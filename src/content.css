@@ -100,6 +100,8 @@
 .timezone-note { font-size: 0.75rem; line-height: 1.8; margin-bottom: 1.5rem; }
 .form-grid { display: grid; gap: 1.5rem; }
 .form-grid > div { min-width: 0; }
+/* Let native select text reflow when enlarged in WebKit, without clipping the field or its focus ring. */
+.form-grid select { white-space: normal; }
 .form-grid label:not(.acknowledgment) { display: block; font-size: 0.75rem; margin-bottom: 0.65rem; }
 .form-grid label span { font-size: 0.6875rem; }
 .form-grid input:not([type="checkbox"]), .form-grid select, .form-grid textarea { display: block; width: 100%; min-width: 0; min-height: 3rem; border: 1px solid var(--color-taupe); background: transparent; color: var(--color-charcoal); padding: 0.75rem; border-radius: 0; font: inherit; font-size: 0.8125rem; }

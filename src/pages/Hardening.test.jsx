@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 import App from '../App.jsx'
@@ -7,34 +7,34 @@ import ProjectCard from '../components/features/ProjectCard.jsx'
 import GalleryDialog from '../components/features/GalleryDialog.jsx'
 import Photo, { ImageCredit } from '../components/ui/Photo.jsx'
 
-const renderPage = path => render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>)
+const renderPage = async path => { const view = render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>); await waitFor(() => expect(screen.queryByText('Loading page…')).not.toBeInTheDocument()); await screen.findByRole('heading', { level: 1 }); return view }
 
 describe('missing project and image data', () => {
-  it('renders incomplete detail data without crashing or creating broken gallery controls', () => {
+  it('renders incomplete detail data without crashing or creating broken gallery controls', async () => {
     vi.spyOn(projectData, 'getProject').mockReturnValue({ slug: 'incomplete', images: [], scope: null, materials: 'invalid' })
-    renderPage('/projects/incomplete')
-    expect(screen.getByRole('heading', { level: 1, name: 'Untitled concept' })).toBeVisible()
+    await renderPage('/projects/incomplete')
+    expect(await screen.findByRole('heading', { level: 1, name: 'Untitled concept' })).toBeVisible()
     expect(screen.getByText('Scope details are unavailable for this concept.')).toBeVisible()
     expect(screen.getByText('Material details are unavailable for this concept.')).toBeVisible()
     expect(screen.getByRole('img', { name: /No image provided/ })).toBeVisible()
     expect(screen.queryByRole('button', { name: /^Open image/ })).not.toBeInTheDocument()
   })
 
-  it('keeps incomplete cards usable and rejects unsafe or absent slugs', () => {
+  it('keeps incomplete cards usable and rejects unsafe or absent slugs', async () => {
     const view = render(<MemoryRouter><ProjectCard project={{ slug: 'incomplete' }} /></MemoryRouter>)
-    expect(screen.getByRole('link', { name: 'Explore Untitled concept' })).toHaveAttribute('href', '/projects/incomplete')
+    expect(screen.getByRole('link', { name: 'Explore Project / Concept study Untitled concept' })).toHaveAttribute('href', '/projects/incomplete')
     expect(screen.getByRole('img', { name: /No image provided/ })).toBeVisible()
     view.rerender(<MemoryRouter><ProjectCard project={{ slug: '../contact' }} /><ProjectCard /></MemoryRouter>)
     expect(screen.queryByRole('link')).not.toBeInTheDocument()
   })
 
-  it('supplies missing alt text and omits absent or unsafe credit links', () => {
+  it('supplies missing alt text and omits absent or unsafe credit links', async () => {
     render(<><Photo image={{ src: '/images/example.webp' }} /><ImageCredit /><ImageCredit image={{ source: 'javascript:alert(1)', photographer: 'Sample' }} /></>)
     expect(screen.getByRole('img', { name: 'Illustrative interior reference photograph' })).toBeVisible()
     expect(screen.queryByRole('link')).not.toBeInTheDocument()
   })
 
-  it('clamps a gallery selection when its images shrink and handles an empty gallery', () => {
+  it('clamps a gallery selection when its images shrink and handles an empty gallery', async () => {
     const images = projectData.projects[0].images
     const onClose = vi.fn()
     const view = render(<GalleryDialog images={images} initialIndex={2} onClose={onClose} />)
@@ -54,8 +54,8 @@ describe('missing project and image data', () => {
 })
 
 describe('form length boundaries and reset', () => {
-  it.each(['/contact', '/consultation'])('%s rejects oversized input, preserves it and resets all feedback', path => {
-    renderPage(path)
+  it.each(['/contact', '/consultation'])('%s rejects oversized input, preserves it and resets all feedback', async path => {
+    await renderPage(path)
     const name = screen.getByLabelText(/^Full name/)
     const message = screen.getByLabelText(path === '/contact' ? /^Message/ : /^Project brief/)
     fireEvent.change(name, { target: { value: 'N'.repeat(121) } })

@@ -1,11 +1,11 @@
-import { useEffect } from 'react'
+import usePageTitle from '../hooks/usePageTitle.js'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import Container from '../components/ui/Container.jsx'
 import PageHeader from '../components/ui/PageHeader.jsx'
 import Button from '../components/ui/Button.jsx'
 
 export default function NotFoundPage() {
-  useEffect(() => { document.title = 'Page not found | Atelier North Interiors' }, [])
+  usePageTitle('Page not found')
   return (
     <>
       <PageHeader eyebrow="404 / A little off plan" title="A space yet to be found." description="The page you’re looking for doesn’t exist. Let’s find your way back." />

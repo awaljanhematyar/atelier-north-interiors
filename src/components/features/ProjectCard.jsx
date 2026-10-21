@@ -9,10 +9,10 @@ export default function ProjectCard({ project }) {
   const title = project.title || 'Untitled concept'
   return (
     <article className="project-card">
-      <Link to={`/projects/${project.slug}`} className="project-card__link" aria-label={`Explore ${title}`}>
+      <Link to={`/projects/${project.slug}`} className="project-card__link" aria-label={`Explore ${categoryLabel(project.category)} / Concept study ${title} ${project.location || ''}`.trim()}>
         <Photo image={image} sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" />
-        <div className="project-card__meta"><span>{categoryLabel(project.category)} / Concept study</span><ArrowUpRight size={18} aria-hidden="true" /></div>
-        <h3>{title}</h3>
+        <div className="project-card__meta"><span>{categoryLabel(project.category)} / Concept study</span><ArrowUpRight size={18} aria-hidden="true" /></div>{' '}
+        <h3>{title}</h3>{' '}
         <p className="project-card__location">{project.location}</p>
       </Link>
       <ImageCredit image={image} />

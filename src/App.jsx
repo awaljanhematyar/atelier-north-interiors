@@ -1,13 +1,15 @@
 import { Route, Routes } from 'react-router-dom'
+import { lazy } from 'react'
 import AppLayout from './components/layout/AppLayout.jsx'
 import HomePage from './pages/HomePage.jsx'
-import ProjectsPage from './pages/ProjectsPage.jsx'
-import ProjectDetailPage from './pages/ProjectDetailPage.jsx'
-import ServicesPage from './pages/ServicesPage.jsx'
-import AboutPage from './pages/AboutPage.jsx'
-import TestimonialsPage from './pages/TestimonialsPage.jsx'
-import EnquiryPage from './pages/EnquiryPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
+
+const ProjectsPage = lazy(() => import('./pages/ProjectsPage.jsx'))
+const ProjectDetailPage = lazy(() => import('./pages/ProjectDetailPage.jsx'))
+const ServicesPage = lazy(() => import('./pages/ServicesPage.jsx'))
+const AboutPage = lazy(() => import('./pages/AboutPage.jsx'))
+const TestimonialsPage = lazy(() => import('./pages/TestimonialsPage.jsx'))
+const EnquiryPage = lazy(() => import('./pages/EnquiryPage.jsx'))
 
 export default function App() {
   return (

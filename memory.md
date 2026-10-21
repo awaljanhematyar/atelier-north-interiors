@@ -1,7 +1,7 @@
 # Project Memory: Atelier North Interiors
 
 ## Status
-Phases 0A, 0B, 1, 2, 3 and 4 completed and verified on 2026-10-21 (Asia/Kabul), with the browser/assistive-technology limitations recorded below. This file is a handoff log; the observations below describe checks actually executed.
+Phases 0A, 0B, 1, 2, 3 and 4 were verified on 2026-10-21. Phase 5 local QA and optimization were verified across 2026-10-21–22 (Asia/Kabul), with the performance, browser and assistive-technology limitations recorded below. This file is a handoff log; observations describe checks actually executed, not deployed production guarantees.
 
 ## Locked decisions
 - Brand: Atelier North Interiors.
@@ -20,11 +20,11 @@ Phases 0A, 0B, 1, 2, 3 and 4 completed and verified on 2026-10-21 (Asia/Kabul), 
 - [x] Phase 2: pages and content
 - [x] Phase 3: interactions
 - [x] Phase 4: accessibility and edge cases
-- [ ] Phase 5: QA
+- [x] Phase 5: local QA and optimization, with documented limitations
 - [ ] Phase 6: deployment and handoff
 
 ## Current task
-Phase 4 complete within available tooling. Stop and wait for explicit Phase 5 approval. The existing public GitHub repository is connected to local main. No new GitHub repository was created and nothing was deployed.
+Phase 5 local verification is finished; the interrupted work was preserved and the WebKit overflow corrected. Normal Git commit/push verification closes this task after this record is written. Stop before Phase 6 and wait for explicit approval. No deployment has occurred. See the final Phase 5 record for measured performance limits and remaining hosting/assistive-technology checks.
 
 ## Completed setup
 - Reread all six planning documents completely before editing; the root initially contained only these six files and no README.
@@ -111,7 +111,7 @@ Verification commands:
 - 2026-10-21: Completed approved Phase 0B only; added setup shell, tooling, tests, docs and verified results above. Existing specification files preserved. No access to unrelated projects.
 
 ## Next session handoff
-Wait for explicit Phase 4 approval. Then reread the planning documents and README; extend edge-case and accessibility review across project/filter empty states, image failures, keyboard/assistive technology, navigation boundaries, form consent/error announcements and reduced motion. Consider additional Safari/Firefox and screen-reader coverage. Do not change the local-only privacy model or assume deployment is complete.
+Wait for explicit Phase 6 approval. Reread the planning documents and README, confirm the real production origin and indexing policy, then perform the separately approved deployment and hosted-route/social-preview checks. Review the Phase 5 performance and assistive-technology limitations below. Preserve the local-only demo privacy model; do not assume deployment has occurred.
 
 ## Phase 1 implementation — 2026-10-21 (Asia/Kabul)
 - Read PRD, architecture, design, rules, phases, memory and README completely before edits. CODEX_MASTER_PROMPT.md was absent. Started from a clean main at 7e1be58c57297b49655d97e1ed3701477c95baaa.
@@ -319,3 +319,95 @@ git diff --check
 - Requested commit: fix: harden accessibility and edge cases. No force push or history rewriting.
 - No known critical application issue remains in tested scope. Limitations: unavailable Firefox/WebKit and assistive technologies, untested native browser zoom/physical touch devices, modern native dialog/current Intl timezone data required, basic client email checking and no formal accessibility certification. Local preview does not verify Vercel rewrites or deployed HTTP status behavior.
 - Phase 5 recommendation after explicit approval: run Firefox/WebKit and actual NVDA/VoiceOver/TalkBack where available; test native zoom/device input; then perform approved performance/metadata/QA work. Keep noindex/publication policy and deployment deep-link checks for their approved later scope. Do not begin Phase 5 or deploy now.
+
+## Phase 5 recovery and optimization — 2026-10-21–22 (Asia/Kabul)
+
+### Scope and recovery
+- Resumed the interrupted working tree on main at 5f710542ff9670e1b099d04845ce5349bea1ad71. Reread the planning documents, README, image credits and attached Phase 5 request, then inspected Git status, diff and preserved QA artifacts. CODEX_MASTER_PROMPT.md/AGENTS.md were absent. No reset, discard, scaffold restart, unrelated-project access or deployment.
+- Preserved existing Phase 5 route metadata, generated static heads, route-level lazy loading, font/image hints, responsive image derivative and tests. Kept the React/Vite client-rendered architecture, premium design, all twelve records and demo interactions. No application package/lockfile changes, new framework, backend, persistence, tracking or real submission/booking.
+- PRD.md, architecture.md, design.md, rules.md, phases.doc.md, IMAGE_CREDITS.md, src/data/projects.js, package.json/package-lock.json and original image/font files remain unchanged. memory.md is the only planning document updated. Supplemental derivative provenance is in ASSET_OPTIMIZATION.md.
+
+### Confirmed fixes and implementation
+- WebKit 26.5 reproduced Contact overflow only after a navigation/text-sizing sequence: at viewport 320px and root text 200%, document scroll width was 471px while the visible native Project category select was 240px wide. Isolated the native select's text overflow; textarea sizing, select width and appearance changes did not solve it. Applying white-space: normal to form selects returned scroll width to 320px without clipping content or focus indicators. Native select behavior, labels and enlarged text remain available.
+- The focused final WebKit sequence passed sixteen navigation/text-size states plus both enlarged form-error states. Selected category text wrapped; document width 320px, body overflow visible, focus retained and outline solid. Inspected the enlarged selected-field capture. No overflow:hidden/clip workaround was added.
+- Build-time metadata covers seven core routes plus twelve project details, with unique titles/descriptions, en-CA language, accurate fictional-portfolio OG/Twitter copy, licensed local images/alt text, robots and canonical/sitemap configuration. No fabricated business/review structured data.
+- The build emits nineteen valid HTML documents and 404.html with route-specific head tags; bodies still require client JavaScript. This is head generation, not SSR or full page prerendering. Home is eager; other pages are lazy, with announced loading and reload recovery on chunk failure.
+- Replaced the blanket host fallback with explicit valid-route document mappings so raw nested responses preserve their heads and unknown URLs can retain HTTP 404. This is the smallest correction to architecture.md's original blanket-fallback suggestion required by the approved Phase 5 metadata/404 requirements; the React SPA architecture is unchanged. Vercel's native static 404 behavior is configured, not deployed or verified.
+- Preview middleware serves actual generated route heads and noindex 404 responses. Found and fixed another Vite fallback defect: nonexistent .html URLs returned successful home HTML. Only existing static files within dist are now delegated; dotted unknown paths also return the custom noindex 404.
+- Detailed Lighthouse/axe review found visible-label/name mismatches despite a 100 weighted accessibility score. Brand and Menu names now include visible wording; cards include category/title/location; gallery says Open image. Added explicit word separators between card blocks and previous/next labels and titles so extracted visible words do not join. Browser and unit regressions cover these cases.
+
+### Performance and assets
+- Final build: Vite 8.3.5, 1976 modules, 4.26s, exit 0. Initial JavaScript is 306,892 bytes (229,780 entry + 77,112 eager shared chunk), versus preserved Phase 4's 327,374 bytes: 20,482 bytes/6.26% smaller. Do not count only the entry file as the entire initial payload. Rounded gzip initial JS is 96.80kB versus 100.31kB. Deferred route modules remain separate; total built JS is not the initial payload.
+- CSS is 28,996 bytes, 6.74kB gzip. Build printed informational plugin-timing advice, no blocking errors. No speculative memoization, animation library or framework change.
+- Two local WOFF2 fonts use font-display: swap and preload hints. Critical initial-route hero hints match responsive candidates; supporting images stay lazy. Local font/favicons and every WebP were verified.
+- New portrait derivative: public/images/optimized/28450649-960.webp, 960x1440, quality 80, 101,014 bytes, derived from the existing licensed Masood Aslami/Pexels source. Compared with the 210,380-byte 1600px original it saves 109,366 bytes/52% when selected. Original 640/1600 variants and credits are preserved; total repository image bytes grow by the added variant, while selected delivery can shrink. Browser DPR/viewport controls selection. Lighthouse confirmed use of the new candidate; some below-fold photo-delivery savings remain possible.
+
+### Final Lighthouse and lab measurements
+Lighthouse 13.5.0 against http://127.0.0.1:4179/, actual headless Edge 155.0.4283.62, sequential audits after functional browsers/tests closed. Mobile simulated profile: 412x823, DPR 1.75, 150ms RTT, 1638.4Kbps throughput, 4x CPU. Desktop: 1350x940, DPR 1, 40ms RTT, 10240Kbps, 1x CPU.
+
+| Final profile | Performance | Accessibility | Best Practices | SEO | LCP ms | CLS | TBT ms |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Mobile | 94 | 100 | 100 | 66 | 2762.893 | 0.0004793864 | 157.5 |
+| Desktop | 100 | 100 | 100 | 66 | 645.306 | 0 | 4.5 |
+
+- Both final detailed label-content-name-mismatch audits passed. The only failed weighted SEO audit is is-crawlable: deliberate noindex/nofollow and robots Disallow, retained until real-domain/publication approval. No indexing flag was enabled just to inflate a score. Mobile warned that host CPU is slower than Lighthouse expects; desktop had no warning.
+- Mobile Lighthouse LCP remains above the 2.5s goal. This is a measured performance limitation, not a claim that all Core Web Vitals targets or production readiness guarantees are satisfied.
+- Preserved initial mobile report: 44/100/100/58, LCP 8644.5ms, CLS 0.0004794, TBT 576ms, cache-clear/slow-CPU warnings amid other QA load. An intermediate post-optimization report was 89/100/100/66. Conditions/host load vary, so do not attribute the entire score difference to code or select only the best sample.
+- Separate final controlled browser lab: three cold contexts, 390x844/DPR1, disabled HTTP cache, 150ms RTT, 1.6Mbps down/750Kbps up, 4x CPU slowdown. LCP 2532/1856/1920ms (median 1920); CLS 0.03670887/0/0; maximum observed selected-interaction Event Timings 88/40/72ms. Selected actions were menu, project filtering/navigation and gallery controls. These timings are NOT real-user field INP.
+- Preserved baseline under the same configured lab profile: LCP 2436/1760/1748ms (median 1760), CLS 0.03670887 each, selected-event maxima 72/64/152ms. The small final sample does not establish an LCP improvement over baseline; hard byte savings are independently verified. Earlier intermediate interaction measurement had a 392ms outlier during overlapping QA load; it was retained, not represented as field INP. All final measured CLS samples are below 0.1, but they are not uniformly zero.
+- Reports and sample JSON are local ignored tmp/phase5-verified-{mobile,desktop}.lhr.json and tmp/phase5-verified-metrics.json. Earlier reports are preserved separately. No field traffic/data or hosted measurements exist yet.
+
+### Browser, routing, accessibility and privacy results
+- Actual Chromium 155.0.4283.62, Firefox 153.0 and WebKit 26.5 each passed 197 responsive/interaction states: eight widths 320/375/390/768/1024/1280/1440/1920, eight representative routes at 100%/200% root font size, filters, gallery modality/arrows/Escape/focus return, FAQs, both forms' errors/success/reset, menus, 844x390 landscape, long content and reduced motion. Each run verified nineteen raw route heads and nineteen internal targets, with zero unexpected console/page/resource errors and zero external requests.
+- After the final whitespace-only label corrections, a further thirty targeted states across all three engines/375px/1440px passed the detailed axe label rule with zero violations or incomplete results and no overflow. Covered home/cards, all twelve portfolio cards, first/middle/last project navigation and gallery triggers. No blanket claim that every axe rule or WCAG criterion was tested.
+- Final raw-response audit checked all nineteen valid route titles/descriptions/social tags and status 200. Four unknown paths (/not-a-page, /projects/not-a-concept, /missing.html, /a.b) returned status 404 with custom not-found metadata/noindex. Nested refresh and 404 recovery worked. Default robots.txt returned valid Disallow; absent sitemap.xml correctly returned 404 rather than home HTML.
+- Decoded all twenty-five WebPs, confirmed local fonts and favicon 200. Existing asset fallback/alt/priority regression tests remain passing. Original image licensing register is untouched.
+- Reserved-host build fixture (https://portfolio.example, test only) verified nineteen absolute canonical heads, nineteen sitemap entries, explicit publication flag, robots Sitemap and noindex 404. No production hostname was invented, deployed or submitted. Default build has no canonical/og:url/sitemap and remains noindex. Client navigation updates metadata and removes stale canonicals on 404.
+- Both forms remain local React demos. Original unit spies confirm no fetch/XHR send/storage write during completion; browser completions/reset and empty storage passed. Source scan excluding tests found no submission transport, analytics, unsafe HTML insertion or personal-data persistence. No availability, email, calendar, appointments, backend or database.
+- WebKit Windows default Tab skips links and moves from the menu toggle into form controls; focus exit correctly dismisses the inline menu. Escape was separately verified from a focused navigation link. Do not represent this as native full-link tabbing or physical Safari/iOS verification.
+- NVDA was absent/not running at the checked standard paths; VoiceOver/macOS and TalkBack/Android unavailable. Actual screen readers, native browser zoom and physical touch devices remain untested. Engine/semantic/contrast checks and audit scores are not accessibility certification.
+
+### Automated tests, security and exact verification commands
+- Final automated suite: 125 passed across 9 files, 48.63s, exit 0. Original 95 tests retained; thirty additional regression cases cover metadata, dynamic SEO, build generation, sitemap/robots, route mappings, image priority/candidates, chunk failure, label content and project navigation. No skipped tests or suppressed unhandled errors. Final lint exit 0, no errors/warnings; final source build result above.
+- Earlier recovery fork run passed only 89 tests and failed to start two workers: not a passing suite. Switched to Vitest's supported threads pool, maxWorkers 2, retaining per-file isolation. A metadata test then exposed effect timing (123/124); it now waits for metadata while preserving assertions. Another added assertion initially matched card and credit links (123/124); scoped it to the named card. Subsequent complete runs passed 124, then 125 after the navigation regression was added. No assertions were removed to hide failures.
+- npm audit --json --fetch-retries=0 --fetch-timeout=30000 returned exit 0, zero known vulnerabilities across 276 dependency entries. Manifests stayed unchanged; no automatic upgrade. This is a registry snapshot, not a guarantee against undisclosed vulnerabilities.
+- Used Node v24.16.0/npm 11.13.0 with explicit executables; no global system settings changed. Sandbox Git ownership checks used per-command safe.directory, not a global exception. Restricted worker/network/listening operations were rerun through approved outside-sandbox execution where needed.
+
+PowerShell, working directory D:\atelier-north-interiors:
+
+```powershell
+$env:PATH = 'C:\Program Files\nodejs;' + $env:PATH
+& 'C:\Program Files\nodejs\npm.cmd' run build
+& 'C:\Program Files\nodejs\npm.cmd' run lint
+& 'C:\Program Files\nodejs\npm.cmd' test
+& 'C:\Program Files\nodejs\npm.cmd' audit --json --fetch-retries=0 --fetch-timeout=30000
+& 'C:\Program Files\nodejs\npm.cmd' run preview -- --host 127.0.0.1 --port 4179 --strictPort
+& 'C:\Program Files\nodejs\node.exe' tmp/phase5-production.cjs chromium
+& 'C:\Program Files\nodejs\node.exe' tmp/phase5-production.cjs firefox
+& 'C:\Program Files\nodejs\node.exe' tmp/phase5-production.cjs webkit
+& 'C:\Program Files\nodejs\node.exe' tmp/phase5-webkit-final.cjs
+& 'C:\Program Files\nodejs\node.exe' tmp/phase5-labels.cjs
+& 'C:\Program Files\nodejs\node.exe' tmp/phase5-final-verify.cjs
+& 'C:\Program Files\nodejs\node.exe' tmp/phase5-fixture-check.mjs
+& 'C:\Program Files\nodejs\node.exe' tmp/phase5-metrics.cjs verified
+$env:CHROME_PATH = 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
+& 'C:\Program Files\nodejs\node.exe' tmp/qa-tools/node_modules/lighthouse/cli/index.js http://127.0.0.1:4179/ '--chrome-flags=--headless=new --no-sandbox --disable-gpu' --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=tmp/phase5-verified-mobile.lhr.json --quiet
+& 'C:\Program Files\nodejs\node.exe' tmp/qa-tools/node_modules/lighthouse/cli/index.js http://127.0.0.1:4179/ '--chrome-flags=--headless=new --no-sandbox --disable-gpu' --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=tmp/phase5-verified-desktop.lhr.json --quiet --preset=desktop
+git diff --check
+```
+
+- Fixture build executed separately with SITE_URL=https://portfolio.example and INDEX_SITE=true, npm run build -- --outDir tmp/phase5-seo-fixture; those process-local test settings were not persisted or used for the normal build. The fixture verifier was rerun during recovery.
+- Browser scripts use the already bundled Playwright 1.62.1 runtime, with Firefox/WebKit binaries installed only under ignored tmp/browsers. Lighthouse 13.5.0 and its axe runtime are isolated in ignored tmp/qa-tools, not project manifests. The first Lighthouse tool install hit EIDLETIMEOUT; bounded retry succeeded. Browser download fallback succeeded after the primary redirect failed. No Chromium emulation was called Firefox/WebKit.
+- The production preview started for recovery was stopped with Ctrl+C after all checks; interrupted exit 1 is the intentional shutdown. Browser scripts closed their task-owned browsers. The previous baseline preview session no longer existed after recovery; no unrelated listener/process was stopped.
+
+### Created and modified files
+- Created: ASSET_OPTIMIZATION.md; public/images/optimized/28450649-960.webp; scripts/seo-build.js; src/components/layout/PageLoadBoundary.jsx; src/pages/Metadata.test.jsx; src/utils/images.js, seo.js, seo.test.js.
+- Modified: README.md; memory.md; eslint.config.js; index.html; vite.config.js; vercel.json; src/App.jsx, App.test.jsx, content.css, test/setup.js; src/components/features/ProjectCard.jsx, ProjectNavigation.jsx; src/components/layout/AppLayout.jsx, Brand.jsx, Header.jsx; src/components/ui/Photo.jsx; src/hooks/usePageTitle.js; src/pages/CorePages.test.jsx, Hardening.test.jsx, Interactions.test.jsx, NotFoundPage.jsx, ProjectDetailPage.jsx.
+- Thirty intended files in total. QA tools, browser binaries, reports, temporary scripts, node_modules and dist stay ignored and are not application deliverables.
+
+### Git closure, limitations and Phase 6 handoff
+- Complete source/test/config/docs diff reviewed, protected paths checked unchanged and git diff --check passed. Final staged review contained exactly thirty intended files; common credential/private-key scans found no matches, forbidden-path count was zero and all seven ignore probes passed. No dependencies, dist, temporary QA tools, env files or secrets are staged. Remote origin remains the existing repository; immediately before staging, refs matched only main at the starting Phase 4 commit. Normal commit/push and synchronization verification follow this record; the resulting hash is reported after execution rather than embedded self-referentially here.
+- Requested commit: perf: optimize SEO performance and production readiness. Never force push or rewrite history. No known critical functional defect remains in the tested local scope; this does not mean all performance goals or every browser/device/assistive-technology combination are verified.
+- Remaining measured limits: mobile Lighthouse LCP 2.763s exceeds the 2.5s goal; host CPU warnings and small lab samples limit conclusions; below-fold responsive delivery can improve further; no real-user INP/field data. Keep these observations when evaluating future changes rather than claiming every metric improved.
+- Remaining platform checks: actual Vercel deep URLs/404 status/cache/security headers, real-domain canonical/sitemap/social images and social-crawler format/caching behavior. Page bodies remain client-rendered, and no actual social-platform fetch compatibility is claimed. Modern native dialog/current Intl timezone data are still required.
+- Wait for explicit Phase 6 approval. Then confirm the actual HTTPS production origin and indexing policy, use Vite/npm ci/npm run build/dist and a Node 24.x patch satisfying package.json, keep preview builds noindex, and verify every hosted route/status/head/asset/robots/sitemap/social card before claiming deployment complete. No Vercel deployment, public-domain guess, search-engine submission, real form integration or Phase 6 work occurred here.

@@ -1,6 +1,9 @@
 import '@testing-library/jest-dom/vitest'
-import { cleanup } from '@testing-library/react'
+import { cleanup, configure } from '@testing-library/react'
 import { afterEach, vi } from 'vitest'
+
+// Allow the first dynamic page import to compile on slower Windows workers.
+configure({ asyncUtilTimeout: 5000 })
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

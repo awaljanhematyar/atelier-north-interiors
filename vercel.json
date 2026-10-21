@@ -1,4 +1,102 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "headers": [
+    {
+      "source": "/assets/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/projects",
+      "destination": "/projects/index.html"
+    },
+    {
+      "source": "/services",
+      "destination": "/services/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about/index.html"
+    },
+    {
+      "source": "/testimonials",
+      "destination": "/testimonials/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact/index.html"
+    },
+    {
+      "source": "/consultation",
+      "destination": "/consultation/index.html"
+    },
+    {
+      "source": "/projects/cedar-and-light",
+      "destination": "/projects/cedar-and-light/index.html"
+    },
+    {
+      "source": "/projects/the-reading-room",
+      "destination": "/projects/the-reading-room/index.html"
+    },
+    {
+      "source": "/projects/quiet-canopy",
+      "destination": "/projects/quiet-canopy/index.html"
+    },
+    {
+      "source": "/projects/common-ground",
+      "destination": "/projects/common-ground/index.html"
+    },
+    {
+      "source": "/projects/northline-studio",
+      "destination": "/projects/northline-studio/index.html"
+    },
+    {
+      "source": "/projects/the-material-office",
+      "destination": "/projects/the-material-office/index.html"
+    },
+    {
+      "source": "/projects/gather-house",
+      "destination": "/projects/gather-house/index.html"
+    },
+    {
+      "source": "/projects/field-and-table",
+      "destination": "/projects/field-and-table/index.html"
+    },
+    {
+      "source": "/projects/lantern-social",
+      "destination": "/projects/lantern-social/index.html"
+    },
+    {
+      "source": "/projects/a-lighter-layer",
+      "destination": "/projects/a-lighter-layer/index.html"
+    },
+    {
+      "source": "/projects/around-the-table",
+      "destination": "/projects/around-the-table/index.html"
+    },
+    {
+      "source": "/projects/morning-line",
+      "destination": "/projects/morning-line/index.html"
+    }
+  ],
+  "trailingSlash": false
 }
