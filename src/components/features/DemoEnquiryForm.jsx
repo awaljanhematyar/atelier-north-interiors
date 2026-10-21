@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { Check, ArrowRight } from 'lucide-react'
 import { categories } from '../../data/projects.js'
-import { timeWindows, validateEnquiry, vancouverToday } from '../../utils/validation.js'
+import { fieldLimits, timeWindows, validateEnquiry, vancouverToday } from '../../utils/validation.js'
 import FormField from '../ui/FormField.jsx'
 import Button from '../ui/Button.jsx'
 
@@ -64,14 +64,14 @@ export default function DemoEnquiryForm({ consultation = false }) {
     <form ref={element => { if (element && focusAfterReset.current) { element.elements.namedItem('name')?.focus(); focusAfterReset.current = false } }} aria-labelledby="form-title" aria-describedby={consultation ? 'form-demo-note timezone-note' : 'form-demo-note'} noValidate onSubmit={submit} autoComplete="off">
       {Object.keys(errors).length > 0 && <div className="form-error-summary" role="alert" key={attempt}><strong>Please check the highlighted fields.</strong><p>{Object.keys(errors).length} {Object.keys(errors).length === 1 ? 'field needs' : 'fields need'} attention. Your entries have been kept.</p></div>}
       <div className="form-grid">
-        {field('name', 'Full name', { maxLength: 120 })}
-        {field('email', 'Email address', { type: 'email', maxLength: 254 })}
+        {field('name', 'Full name', { maxLength: fieldLimits.name })}
+        {field('email', 'Email address', { type: 'email', maxLength: fieldLimits.email })}
         {field('category', 'Project category', { as: 'select', className: 'form-full', children: <><option value="">Choose a project category</option>{categories.map(category => <option value={category.id} key={category.id}>{category.label}</option>)}</> })}
         {consultation && <>
           {field('date', 'Preferred date', { type: 'date', min: today, max: '9999-12-31', hintId: 'timezone-note' })}
           {field('time', 'Preferred time window', { as: 'select', hintId: 'timezone-note', children: <><option value="">Choose a preference</option>{timeWindows.map(window => <option key={window.value} value={window.value}>{window.label}</option>)}</> })}
         </>}
-        {field('message', consultation ? 'Project brief' : 'Message', { as: 'textarea', rows: 5, className: 'form-full', maxLength: 5000 })}
+        {field('message', consultation ? 'Project brief' : 'Message', { as: 'textarea', rows: 5, className: 'form-full', maxLength: fieldLimits.message })}
         <div className="form-full">
           <label className="acknowledgment" htmlFor={acknowledgmentId}>
             <input id={acknowledgmentId} name="acknowledgment" type="checkbox" checked={values.acknowledgment} onChange={update} required aria-invalid={errors.acknowledgment ? 'true' : undefined} aria-describedby={errors.acknowledgment ? 'acknowledgment-error' : undefined} />

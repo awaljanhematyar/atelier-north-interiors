@@ -1,5 +1,5 @@
 export function filterProjects(projects, category = 'all') {
-  return projects.filter(project => project && typeof project.slug === 'string' && (category === 'all' || project.category === category))
+  return (Array.isArray(projects) ? projects : []).filter(project => project && typeof project.slug === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(project.slug) && (category === 'all' || project.category === category))
 }
 
 export function projectNeighbours(projects, slug) {

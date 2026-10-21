@@ -5,6 +5,19 @@ const valid = { name: 'Demo Visitor', email: 'demo@example.com', category: 'resi
 const options = { consultation: true, categories: ['residential'], today: '2026-10-21' }
 
 describe('demo form validation', () => {
+  it('accepts trimmed surrounding whitespace and exact field length limits', () => {
+    expect(validateEnquiry({ ...valid, name: '  Demo Visitor  ', email: '  demo@example.com  ', message: '  A brief.  ' }, options)).toEqual({})
+    expect(validateEnquiry({ ...valid, name: 'N'.repeat(120), email: 'a'.repeat(242) + '@example.com', message: 'M'.repeat(5000) }, options)).toEqual({})
+  })
+  it('rejects over-limit values even when native maxlength is bypassed', () => {
+    expect(validateEnquiry({ ...valid, name: 'N'.repeat(121), email: 'a'.repeat(243) + '@example.com', message: 'M'.repeat(5001), acknowledgment: 'true' }, options)).toMatchObject({ name: expect.any(String), email: expect.any(String), message: expect.any(String), acknowledgment: expect.any(String) })
+  })
+  it('uses Vancouver dates across historical clock transitions and the 2026 spring boundary', () => {
+    for (const instant of ['2025-03-09T09:59:59Z', '2025-03-09T10:00:00Z']) expect(vancouverToday(new Date(instant))).toBe('2025-03-09')
+    for (const instant of ['2025-11-02T08:59:59Z', '2025-11-02T09:00:00Z']) expect(vancouverToday(new Date(instant))).toBe('2025-11-02')
+    expect(vancouverToday(new Date('2026-03-08T07:59:59Z'))).toBe('2026-03-07')
+    expect(vancouverToday(new Date('2026-03-08T08:00:00Z'))).toBe('2026-03-08')
+  })
   it('accepts complete contact and consultation values', () => {
     expect(validateEnquiry(valid, options)).toEqual({})
     expect(validateEnquiry(valid, { ...options, consultation: false })).toEqual({})

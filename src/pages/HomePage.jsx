@@ -12,7 +12,7 @@ import usePageTitle from '../hooks/usePageTitle.js'
 
 export default function HomePage() {
   usePageTitle('Spaces That Tell Your Story')
-  const hero = projects[0].images[0]
+  const hero = projects[0]?.images?.[0]
   return <>
     <section className="home-hero" aria-labelledby="page-title">
       <Container>

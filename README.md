@@ -1,6 +1,6 @@
 # Atelier North Interiors
 
-A fictional Vancouver interior design studio portfolio demo built with React, Vite and JavaScript JSX. Phase 3 adds portfolio filters, an accessible reference gallery, project navigation, FAQ accordion and local-only demo enquiry/consultation forms to the existing editorial pages.
+A fictional Vancouver interior design studio portfolio demo built with React, Vite and JavaScript JSX. The editorial pages include portfolio filters, a reference gallery, project navigation, FAQ accordion and local-only demo enquiry/consultation forms. Phase 4 hardens text resizing, missing content and form boundaries.
 
 ## Requirements
 
@@ -52,6 +52,8 @@ Gallery triggers open a native modal dialog. Previous/next images wrap; Left/Rig
 
 Contact and Consultation are controlled local React demos. Required fields, trimmed empty values, basic email format, category and acknowledgment are validated; Consultation additionally validates a real calendar date, no dates before today in Vancouver, and an allowed time window. Errors retain entries, announce feedback and focus the first invalid field. Completion is immediate, guarded against duplicates, and clears entered data. Start again/Clear form resets state and restores focus to the name field.
 
+Name, email and message/brief limits are 120, 254 and 5,000 characters respectively, enforced by both native controls and validation. Missing project images, credits, scope and materials have safe rendering paths. Gallery selection remains valid if its image list shrinks.
+
 No form fetch, email, calendar, backend, storage write or real reservation occurs. Enter sample values only: input exists temporarily in component memory until completion, reset or navigation. Consultation confirmation explicitly says: “This is a demo. No appointment has been booked.” Contact confirmation says no message has been delivered. Contact information uses a reserved `.example` address and no real office location.
 
 Dates use `Intl.DateTimeFormat` with `America/Vancouver`, not the device's local calendar or a hard-coded offset. Keep browser/runtime timezone data current. B.C. adopted permanent daylight time in 2026; the earlier seasonal-time copy was corrected after checking [the official provincial notice](https://news.gov.bc.ca/releases/2026AG0013-000209). This demo does not model appointment duration, availability or a scheduling service.
@@ -74,4 +76,6 @@ Real enquiries or scheduling require a separately approved service integration, 
 
 ## Phase gate
 
-See memory.md for executed commands and actual results. Phase 3 is complete; Phase 4 requires explicit approval. No deployment has been performed.
+See memory.md for executed commands and actual results. Phase 4 verification covers Chromium, all eight requested widths from 320–1920px, 200% root text sizing, keyboard interactions and local production preview. Firefox/WebKit binaries and NVDA were unavailable; VoiceOver, TalkBack and native browser zoom were not tested. Accessibility semantics and contrast checks are not WCAG certification or screen-reader verification.
+
+Phase 4 is complete with these documented testing limitations. Phase 5 requires explicit approval. No deployment has been performed.

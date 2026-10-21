@@ -3,6 +3,8 @@ export const timeWindows = [
   { value: 'afternoon', label: 'Afternoon · 1–5 pm' },
 ]
 
+export const fieldLimits = { name: 120, email: 254, message: 5000 }
+
 export function vancouverToday(now = new Date()) {
   const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Vancouver', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(now)
   const part = name => parts.find(item => item.type === name).value
@@ -20,7 +22,9 @@ export function validCalendarDate(value) {
 export function validateEnquiry(values, { consultation = false, categories = [], today = vancouverToday() } = {}) {
   const errors = {}
   if (!values.name.trim()) errors.name = 'Enter your full name.'
+  else if (values.name.length > fieldLimits.name) errors.name = 'Use 120 characters or fewer for your name.'
   if (!values.email.trim()) errors.email = 'Enter your email address.'
+  else if (values.email.length > fieldLimits.email) errors.email = 'Use 254 characters or fewer for your email address.'
   else if (!/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(values.email.trim())) errors.email = 'Enter a valid email address, such as name@example.com.'
   if (!categories.includes(values.category)) errors.category = 'Choose a project category.'
   if (consultation) {
@@ -30,6 +34,7 @@ export function validateEnquiry(values, { consultation = false, categories = [],
     if (!timeWindows.some(window => window.value === values.time)) errors.time = 'Choose a preferred time window.'
   }
   if (!values.message.trim()) errors.message = consultation ? 'Enter a short project brief.' : 'Enter your message.'
-  if (!values.acknowledgment) errors.acknowledgment = 'Acknowledge that this is a demo and nothing will be sent or booked.'
+  else if (values.message.length > fieldLimits.message) errors.message = 'Use 5,000 characters or fewer for your message or brief.'
+  if (values.acknowledgment !== true) errors.acknowledgment = 'Acknowledge that this is a demo and nothing will be sent or booked.'
   return errors
 }

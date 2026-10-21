@@ -3,6 +3,12 @@ import { projects } from '../data/projects.js'
 import { filterProjects, projectNeighbours, relatedProjects } from './portfolio.js'
 
 describe('portfolio selection and ordering', () => {
+  it('handles missing collections and rejects empty or path-like slugs', () => {
+    expect(filterProjects(null)).toEqual([])
+    expect(filterProjects([{ slug: '' }, { slug: '../contact' }, { slug: 'valid-concept' }])).toEqual([{ slug: 'valid-concept' }])
+    expect(projectNeighbours(undefined, 'missing')).toEqual({ previous: null, next: null })
+    expect(relatedProjects(null, projects[0])).toEqual([])
+  })
   it('filters without mutating data and handles empty or invalid records', () => {
     expect(filterProjects(projects)).toHaveLength(12)
     expect(filterProjects(projects, 'unknown')).toEqual([])

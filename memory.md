@@ -1,7 +1,7 @@
 # Project Memory: Atelier North Interiors
 
 ## Status
-Phases 0A, 0B, 1, 2 and 3 completed and verified on 2026-10-21 (Asia/Kabul). Phase 4 has not started. This file is a handoff log; the observations below describe checks actually executed.
+Phases 0A, 0B, 1, 2, 3 and 4 completed and verified on 2026-10-21 (Asia/Kabul), with the browser/assistive-technology limitations recorded below. This file is a handoff log; the observations below describe checks actually executed.
 
 ## Locked decisions
 - Brand: Atelier North Interiors.
@@ -19,12 +19,12 @@ Phases 0A, 0B, 1, 2 and 3 completed and verified on 2026-10-21 (Asia/Kabul). Pha
 - [x] Phase 1: visual system and shell
 - [x] Phase 2: pages and content
 - [x] Phase 3: interactions
-- [ ] Phase 4: accessibility and edge cases
+- [x] Phase 4: accessibility and edge cases
 - [ ] Phase 5: QA
 - [ ] Phase 6: deployment and handoff
 
 ## Current task
-Phase 3 complete. Stop and wait for explicit Phase 4 approval. The existing public GitHub repository is connected to local main. No new GitHub repository was created and nothing was deployed.
+Phase 4 complete within available tooling. Stop and wait for explicit Phase 5 approval. The existing public GitHub repository is connected to local main. No new GitHub repository was created and nothing was deployed.
 
 ## Completed setup
 - Reread all six planning documents completely before editing; the root initially contained only these six files and no README.
@@ -260,3 +260,62 @@ git diff --check
 - Phase 4 recommendations: broaden assistive-technology/cross-browser testing, review unusual input and missing-data scenarios, empty filters, keyboard order and image failure states. Wait for explicit approval before that work.
 - Final staged path/credential scan, commit and normal push follow this verified record. Report the resulting commit hash and local/remote synchronization to the user after execution, avoiding a self-referential commit hash here.
 - Requested commit: feat: implement interactive portfolio and demo forms. No force push or history rewrite.
+
+## Phase 4 audit and hardening — 2026-10-21 (Asia/Kabul)
+- Read the attached Phase 4 request and PRD, architecture, design, rules, phases, memory, README and IMAGE_CREDITS completely before source edits. CODEX_MASTER_PROMPT.md was absent. Inspected source and tests; started from clean main at eec8bac595ca3c9c7a6089169ad947bcb4c464e2. No approved-functionality conflicts required a scope change.
+- Preserved the five specification documents, all twelve project records, IMAGE_CREDITS.md, image/font assets, dependency manifests and existing 85 tests. No new pages, business features, dependencies, persistence, backend, real submissions, bookings or deployment. No unrelated project was accessed.
+
+### Confirmed defects and corrections
+- 200% root text sizing caused horizontal overflow: body min-width:20rem became 640px, while header/footer/CTA flex items resisted wrapping. Removed the fixed page minimum, allowed long text and navigation/footer wrapping, constrained the brand/buttons and allowed CTA/project-navigation children to shrink. Kept the palette, fonts, layouts and desktop sticky navigation.
+- Gallery heading was compressed beside the close button at 320px with 200% text. Visual review prompted header wrapping; controls can wrap and the dialog remains vertically scrollable. Added scroll margins for focusable controls below the sticky header.
+- Native maxlength alone did not enforce controlled form input boundaries when bypassed. Shared limits now enforce name 120, email 254 and message/brief 5,000 characters in controls and validation. Oversized values retain accessible errors/input. Acknowledgment requires boolean true.
+- Missing image arrays/credits and scope/material arrays could crash cards/details or render incomplete links. Added missing-data fallbacks, safe HTTPS Pexels credit links, default alt text, safe slug checks and null-collection handling. Home/About/Services tolerate absent reference images. Valid existing content is unchanged.
+- Gallery selection could fall outside a shortened image array. Clamp the visible index, reject unusable image entries and retain an empty-gallery status with working dismissal.
+- Created src/pages/Hardening.test.jsx. Modified src/components/features/{DemoEnquiryForm,GalleryDialog,ProjectCard}.jsx, src/components/ui/Photo.jsx, src/pages/{HomePage,AboutPage,ServicesPage,ProjectDetailPage}.jsx, src/utils/{portfolio,validation}.js and their tests, src/{index,content,interactions}.css, README.md and memory.md.
+
+### Accessibility, keyboard and responsive evidence
+- Code/DOM review covered semantic landmarks, heading structure, native controls, meaningful names/alt text, explicit labels, required/invalid state, error descriptions, alert/status semantics, FAQ expanded/controlled IDs, pressed filters, native modal isolation and reduced motion. Browser accessibility snapshot confirms form names, invalid state, associated error text and alert structure; this is not screen-reader testing.
+- Bundled Playwright 1.62.1 with actual headless Microsoft Edge Chromium 155.0.4283.62; no package added. Firefox and WebKit launch attempts failed because their executables were absent. Chromium emulation was not represented as another browser engine.
+- Broad browser audit: 162 layout/semantic checks passed. Matrix: nine representative routes x eight widths (320/375/390/768/1024/1280/1440/1920) x 100%/200% root font size = 144; plus eight enlarged menu/error/gallery states, nine 844x390 landscape routes and one very long heading/unbroken-description case. No horizontal document/dialog overflow. Reduced widths exercise reflow; native browser zoom was not operated.
+- Separate interaction run: 64 states passed across all eight widths, covering filters/history/focus/counts, gallery arrows/Escape/close/Tab/Shift+Tab/focus return/background isolation, previous/next boundaries, FAQ Enter/Space, both forms' validation/completion/reset and reduced motion. No unexpected focus traps. Hidden menu content was excluded from keyboard navigation.
+- Production keyboard checks additionally verified skip-link Enter/main focus, mobile Space/Enter/Escape/automatic closing, custom 404 recovery and visible first-error focus. Keyboard traversal, text entry, selection, submission and reset passed for both forms; the consultation date fixture was populated with Playwright native-date fill rather than typed through each date segment. Close controls retain focus indication when keyboard modality is active.
+- Observed 86 text foreground/background/size/weight combinations passed applicable 4.5:1 normal/3:1 large-text thresholds; minimum observed text contrast 9.8067:1 (charcoal/beige), charcoal/ivory 14.2012:1. Sage/taupe decorations do not carry text or control meaning. Primary controls retain at least 44px height; consent has an associated clickable text label and inline credits remain inline links.
+- Viewed 320px gallery, contact and 200% gallery captures plus the full desktop homepage. Corrected the enlarged gallery heading after visual inspection. Forced lazy photos to decode only in the final screenshot harness so below-fold imagery was visible; application lazy loading remains intact.
+- NVDA was not running or installed at either standard Program Files location. NVDA operation untested; VoiceOver/macOS and TalkBack/Android unavailable. No spoken-announcement results, formal WCAG certification or full cross-browser support claim.
+
+### Form, date, project and asset edge cases
+- Automated tests cover whitespace-only/trimmed values, basic invalid emails, exact and over-limit lengths, missing categories/time/consent, invalid/past/current/future calendar dates, leap-year/century rules, repeated submission, error/input retention, error reset and success reset. Existing duplicate-guard and no-fetch/XHR/storage spies remain passing.
+- Added Vancouver date tests across 2025 spring/fall clock transitions and the 2026 spring date boundary, retaining 2026 permanent daylight-time coverage. A browser with visitor timezone Asia/Tokyo and clock 2026-10-21T06:59:59Z correctly used Vancouver date 2026-10-20 and accepted a future preference. No visitor-local date calculation or hard-coded zone offset introduced. Current timezone data is still required.
+- All twelve records/unique slugs/categories/details/ordering/related links remain covered. Missing scope/materials/images/title, unsafe slugs, unknown filters, empty galleries and changing gallery arrays have regression coverage. Broken image requests were deliberately aborted in a separate browser page: page and modal fallbacks appeared and Escape worked; these deliberate failures are separate from normal error-free navigation.
+- Decoded all 24 local WebPs; widths matched 640/1600 variants, heights ranged 427–2400px. Local fonts loaded, favicon returned 200, responsive srcSet/sizes and eager/lazy priorities remain. Frames retain CSS aspect ratios. Image credits/licensing and asset bytes were not changed; no new imagery introduced.
+
+### Security/privacy and verification commands
+Working directory D:\atelier-north-interiors. Each npm command used the existing runtime PATH prefix:
+
+```powershell
+$env:PATH = 'C:\Program Files\nodejs;' + $env:PATH
+& 'C:\Program Files\nodejs\npm.cmd' audit --json --fetch-retries=0 --fetch-timeout=20000
+& 'C:\Program Files\nodejs\npm.cmd' run build
+& 'C:\Program Files\nodejs\npm.cmd' run lint
+& 'C:\Program Files\nodejs\npm.cmd' test
+& 'C:\Program Files\nodejs\npm.cmd' run dev -- --host 127.0.0.1 --port 5178 --strictPort
+& 'C:\Program Files\nodejs\npm.cmd' run preview -- --host 127.0.0.1 --port 4178 --strictPort
+& 'C:\Program Files\nodejs\node.exe' tmp/phase4-audit.cjs
+& 'C:\Program Files\nodejs\node.exe' tmp/phase4-interactions.cjs
+& 'C:\Program Files\nodejs\node.exe' tmp/phase4-form-edges.cjs
+& 'C:\Program Files\nodejs\node.exe' tmp/phase4-final-smoke.cjs
+git diff --check
+```
+
+- Final build exit 0: Vite 8.3.5, 1973 modules, 3.95s; HTML 0.71kB, CSS 28.89kB (6.71kB gzip), JS 327.37kB (100.31kB gzip). Earlier builds emitted informational plugin-timing diagnostics; final build had no blocking errors.
+- Final lint exit 0: no errors/warnings. Final tests exit 0: 95 tests passed across seven files, 54.35s. Original 85 tests retained; ten additional regression cases. Vitest printed informational jsdom timing advice. Earlier intermediate runs also passed 95 tests.
+- Dev started successfully in 1467ms on 127.0.0.1:5178. Preview started on 127.0.0.1:4178. Both task-owned servers were stopped with Ctrl+C after verification (intentional interrupted exit 1). Production smoke: 40 combinations of twenty routes (all twelve details included) at 320/1440px passed; images decoded, single h1, no overflow. Keyboard/menu/skip/404, visible error focus and missing-image fallback checks passed.
+- Normal browser runs recorded zero unexpected console/page/resource errors and zero external requests. Form completion recorded zero requests, empty local/session storage and unchanged query-free URLs. Source review found no unsafe HTML insertion, submission transport, console logging or personal-data storage. React renders text; external image credits use noreferrer and an allowlisted HTTPS host/path.
+- npm audit initially failed on sandbox DNS; approved network retry succeeded with zero known vulnerabilities across 276 audited dependency entries. No automatic updates or manifest changes. This is a registry snapshot, not a guarantee against undisclosed vulnerabilities.
+- Browser scripts/results/screenshots/accessibility snapshot are ignored local tmp/ QA artifacts, not application dependencies or committed content. One audit assertion incorrectly expected keyboard focus styling in pointer mode; corrected to Tab/Shift+Tab. One preview locator used the menu's old accessible name after opening; corrected to a stable toggle locator. Final runs passed; neither harness issue required an application workaround.
+
+### Git and Phase 5 handoff
+- Reviewed complete source/test/docs diff and verified protected specifications, credits, project records and manifests have no diff. Remote main matched the starting Phase 3 commit before staging. Staged path/credential scan passed across 18 intended files, and git diff --cached --check passed. Normal commit/push and final hash/synchronization verification follow this record; the resulting hash is reported after execution to avoid self-reference.
+- Requested commit: fix: harden accessibility and edge cases. No force push or history rewriting.
+- No known critical application issue remains in tested scope. Limitations: unavailable Firefox/WebKit and assistive technologies, untested native browser zoom/physical touch devices, modern native dialog/current Intl timezone data required, basic client email checking and no formal accessibility certification. Local preview does not verify Vercel rewrites or deployed HTTP status behavior.
+- Phase 5 recommendation after explicit approval: run Firefox/WebKit and actual NVDA/VoiceOver/TalkBack where available; test native zoom/device input; then perform approved performance/metadata/QA work. Keep noindex/publication policy and deployment deep-link checks for their approved later scope. Do not begin Phase 5 or deploy now.

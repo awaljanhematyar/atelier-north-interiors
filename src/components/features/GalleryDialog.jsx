@@ -5,8 +5,9 @@ import Photo, { ImageCredit } from '../ui/Photo.jsx'
 export default function GalleryDialog({ images, initialIndex = 0, onClose, trigger }) {
   const dialogRef = useRef(null)
   const closeRef = useRef(null)
-  const available = Array.isArray(images) ? images.filter(image => image && image.src) : []
-  const [index, setIndex] = useState(Math.min(Math.max(0, initialIndex), Math.max(0, available.length - 1)))
+  const available = Array.isArray(images) ? images.filter(image => image && typeof image.src === 'string' && image.src.trim()) : []
+  const [position, setIndex] = useState(Number.isInteger(initialIndex) ? Math.max(0, initialIndex) : 0)
+  const index = Math.min(position, Math.max(0, available.length - 1))
   const image = available[index]
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function GalleryDialog({ images, initialIndex = 0, onClose, trigg
   }, [trigger])
 
   function move(amount) {
-    if (available.length > 1) setIndex(current => (current + amount + available.length) % available.length)
+    if (available.length > 1) setIndex((index + amount + available.length) % available.length)
   }
 
   function handleKeys(event) {
