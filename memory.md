@@ -24,7 +24,7 @@ Phase 0A review and Phase 0B initialization completed and verified on 2026-10-21
 - [ ] Phase 6: deployment and handoff
 
 ## Current task
-Phase 0B complete. Stop and wait for explicit Phase 1 approval. No Git repository was initialized, no commits or GitHub repository were created, and nothing was deployed.
+Phase 0B and GitHub connection complete. Stop and wait for explicit Phase 1 approval. The existing public GitHub repository is connected to local main. No new GitHub repository was created and nothing was deployed.
 
 ## Completed setup
 - Reread all six planning documents completely before editing; the root initially contained only these six files and no README.
@@ -112,3 +112,21 @@ Verification commands:
 
 ## Next session handoff
 Wait for explicit Phase 1 approval. Then reread the six planning documents and README; implement visual tokens/fonts, responsive navigation/footer, shared primitives and route skeletons. Keep approved Consultation and Testimonials decisions above. Do not assume future pages, content, accessibility or deployment are complete.
+
+## GitHub setup verification — 2026-10-21 (Asia/Kabul)
+- User explicitly authorized initialization, committing and pushing to the existing public repository https://github.com/awaljanhematyar/atelier-north-interiors.git.
+- Working directory verified as D:\atelier-north-interiors. Read rules.md and memory.md. Git 2.43.0.windows.1 found no existing local repository or origin.
+- Before initialization, git ls-remote --symref against the supplied URL returned no refs (exit 0); GitHub API confirmed public visibility, default branch main and repository size 0. No remote history was overwritten.
+- Ran git init -b main and git remote add origin https://github.com/awaljanhematyar/atelier-north-interiors.git.
+- Expanded .gitignore to exclude all .env files, local credentials/private keys and temporary/editor recovery files, in addition to node_modules and dist. Verified representative paths with git check-ignore. No secret files were created for these checks.
+- Staged only explicit source, config, docs, public and src paths. Reviewed 29 staged files with git diff --cached --stat, --name-only and the source/config diff. git diff --cached --check passed.
+- Scanned staged text for common GitHub/API/AWS credential formats, private-key headers, embedded URL credentials and secret/password/token assignments. git grep --cached -I -l -E returned 1 (no matches). Forbidden path check found no dependencies, build outputs, .env files, secret directories, private-key or temporary files. This is a targeted scan, not a universal guarantee against unknown secret formats.
+- Rechecked git ls-remote origin immediately before committing: still empty.
+- Initial commit: d0e6ddca3bcaab76fcd40c425218205028b0ca69, message: chore: initialize Atelier North Interiors project.
+- git push -u origin main succeeded with the existing authorized Git authentication. No passwords/tokens requested or exposed; no force push or history rewrite.
+- git status --short --branch showed clean main tracking origin/main; git rev-list --left-right --count main...origin/main returned 0 0; git ls-remote origin refs/heads/main matched the initial commit.
+- GitHub API file list matched all 29 local committed files, including all six planning documents. Git commit API matched the initial commit and tree ef1961966ccfcb1d217d7cf9c070e181ab92cc9d; all 29 GitHub blob hashes matched local blobs.
+- An initial tree-endpoint comparison using a commit SHA gave an inconsistent response SHA. Resolved by reading the Git commit's actual tree SHA, fetching that tree explicitly and comparing every blob: no content mismatch or unexpected repository change found.
+- Sandbox Git index writes and networking were denied; approved outside-sandbox commands completed staging, commit, push and remote verification. Git warned of normal Windows LF/CRLF normalization; no specification content was edited.
+- Updated README's Git status and this handoff record after the verified initial push. This documentation update is intended as a separate follow-up commit; its final hash and final push/sync verification are reported to the user after execution, avoiding a self-referential commit hash in this file.
+- No application feature changes, no access to unrelated projects and no Phase 1 work. Remaining local environment notes above still apply.

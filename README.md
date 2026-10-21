@@ -30,7 +30,7 @@ On Windows, if command resolution selects an inaccessible system shim, use the a
 - `src/test`: Vitest setup; tests live beside their subjects.
 - `src/App.jsx`, `main.jsx`, `index.css`: minimal shell, React/router entry and Tailwind import.
 
-Empty directories contain .gitkeep files so the approved structure can be preserved in version control later. Git has not been initialized by this setup.
+Empty directories contain .gitkeep files to preserve the approved structure in version control. The project is tracked on `main` in the existing public [GitHub repository](https://github.com/awaljanhematyar/atelier-north-interiors).
 
 ## Tooling
 
@@ -52,4 +52,4 @@ Real enquiries or scheduling require a separately approved service integration, 
 
 ## Phase gate
 
-See memory.md for executed commands and actual results. Stop after Phase 0B; Phase 1 requires explicit approval. No deployment or GitHub repository is created by this setup.
+See memory.md for executed commands and actual results. Phase 0B and connection to the existing GitHub repository are complete; Phase 1 requires explicit approval. No deployment has been performed.
