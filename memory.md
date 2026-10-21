@@ -24,7 +24,7 @@ Phases 0A, 0B, 1, 2, 3 and 4 were verified on 2026-10-21. Phase 5 local QA and o
 - [x] Phase 6: deployment and handoff, with documented limitations
 
 ## Current task
-Phase 6 live deployment, QA, screenshots and portfolio integration verified on 2026-10-22. Final release commit/push is the handoff operation; its resulting hash and synchronization are reported after execution. Keep indexing disabled. No additional phase authorized.
+User approved luxury dark redesign and deployment on 2026-10-22. Redesign implemented and locally verified; release commit/push and production verification follow the latest entry. Keep indexing disabled and all forms demo-only.
 
 ## Completed setup
 - Reread all six planning documents completely before editing; the root initially contained only these six files and no README.
@@ -455,3 +455,25 @@ Node 24.16.0/npm 11.13.0, explicit C:\Program Files\nodejs executables and PATH,
 - Screen readers, physical Safari/iOS/Android, native zoom, social validators and field INP unverified; no WCAG certification. Current dialog/Intl timezone support required.
 - Portfolio CMS/backend preserved, not comprehensively re-audited; same-slug CMS entry takes priority over source-managed case study.
 - Phase 6 only; no further feature work authorized. Final commit/push and deployment checks are reported separately after execution.
+## Approved luxury dark redesign — 2026-10-22 (Asia/Kabul)
+- Explicit user request supersedes the original light palette. Baseline clean main 7a92cf34b2fdcb62fe375b5bd6d46b703a009737. Updated design.md with approved near-black/charcoal surfaces, soft ivory typography, restrained champagne accents, controls, layout and motion specifications.
+- Semantic canvas/surface/ink/muted/accent tokens now drive all three existing stylesheets. All page types, navigation/footer, project cards, filters, galleries/dialog controls, FAQs, contact/consultation, error/success/loading/404 states share the dark presentation. Retained legacy brand tokens for compatibility, local fonts and all existing illustrative photographs/content.
+- Homepage hero now has an oversized serif headline on an opaque warm dark panel beside a cinematic full-height reference photo at desktop; stacks without overlap on mobile. Tagline, credit, alt text and responsive source behaviour preserved. CSS-only hero entrance and restrained hover image zoom; no new dependency, autoplay or JavaScript animation layer. Reduced-motion overrides preserved.
+- Native controls use dark colour-scheme; readable selected options, enlarged WebKit select wrapping, dashed error indicators, focus rings and demo disclosures retained. No content, business logic, form transport/storage, project data, metadata generation, route mapping, Vercel project configuration or indexing policy changed.
+- Updated five README screenshots from actual local dark production-preview browser captures. Original-theme walkthrough remains preserved and explicitly labelled archived in README. Personal portfolio repository/cover and unrelated projects were not accessed or changed for this redesign.
+
+### Executed verification
+Node 24.16.0/npm 11.13.0, explicit C:\Program Files\nodejs PATH, project D:\atelier-north-interiors:
+- npm run build: passed, Vite 8.3.5, 1976 modules, 5.27s. CSS 35.37kB/8.07kB gzip; entry JS 229.86kB plus eager shared 77.11kB. No dependency/manifest changes.
+- npm run lint: exit 0, no warnings/errors.
+- npm test: exit 0, all 125 tests across nine files passed, 66.59s; assertions unchanged.
+- npm run preview -- --host 127.0.0.1 --port 4187 --strictPort: served the redesigned production build.
+- node tmp/dark-production.cjs chromium: 197 responsive/interaction states passed; nineteen raw route heads and internal targets; widths 320/375/390/768/1024/1280/1440/1920, 100/200% root text, landscape, menu keyboard/Escape, filters/history, gallery/modal keyboard/focus, FAQs, both demo form error/completion/reset and reduced motion. Zero unexpected console/page/resource errors or external requests.
+- node tmp/dark-webkit-final.cjs: actual WebKit sixteen navigation/text-size states plus both enlarged form-error states passed. Contact at 320px/200% root text: document width 320, normal wrapping, body overflow visible, focused control and solid outline retained.
+- node tmp/dark-accessibility.cjs: 36 page/viewport states across 375/768/1024/1440; eight page types plus 404; no overflow and zero axe WCAG A/AA rule violations. Gradient backgrounds produced incomplete automated color-contrast checks, so this result does not establish all contrast or WCAG compliance by itself.
+- node tmp/dark-contrast.cjs: separately calculated 23 text/background combinations, including brightest gradient stops, error/success surfaces and inverse buttons. Minimum 6.239:1; three interactive border/focus/background combinations minimum 3.405:1. Decorative dividers do not represent interactive boundaries. These checks support AA palette targets, not accessibility certification.
+- node tmp/dark-screenshots.cjs: actual five dark captures at existing documented dimensions; visually inspected desktop/mobile home, desktop portfolio, mobile contact and desktop testimonials. Supporting screenshots/reports stay ignored under tmp. No generated mockups.
+
+### Release and limitations
+- Review scoped diff, protected content/metadata/manifests, staged paths and secret patterns before committing. Release message: feat: redesign Atelier North with luxury dark theme. Push normally to existing origin/main; existing Vercel Git connection deploys to the same project. Verify READY matches the resulting commit, all nineteen live route heads/assets/sitemap/404s and dark rendered desktop/mobile layouts; resulting hash and production observations are reported after execution.
+- Keep SITE_URL=https://atelier-north-interiors.vercel.app and INDEX_SITE=false. No real enquiries or bookings. Prior Lighthouse/field/screen-reader/physical-device limitations still apply; no new Lighthouse or field performance scores claimed.

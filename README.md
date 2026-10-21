@@ -12,9 +12,9 @@ A fictional Vancouver interior design studio portfolio demonstration built with 
 
 <img src="screenshots/mobile-home.png" width="300" alt="Actual mobile homepage screenshot showing the responsive navigation, headline and reference photograph" />
 
-More live captures: [desktop projects](screenshots/desktop-projects.png), [mobile projects](screenshots/mobile-projects.png), [project details](screenshots/desktop-project-details.png). These are actual browser captures, not generated mockups.
+More live captures: [desktop projects](screenshots/desktop-projects.png), [mobile projects](screenshots/mobile-projects.png), [project details](screenshots/desktop-project-details.png). These are actual browser captures of the current dark production preview, not generated mockups.
 
-[Watch the 36.56-second live-site walkthrough](walkthrough/atelier-north-interiors.webm). Also included in the [personal portfolio](https://hematyar-professional-portfolio.vercel.app/projects/atelier-north-interiors).
+[Watch the archived 36.56-second Phase 6 walkthrough (original light theme)](walkthrough/atelier-north-interiors.webm). Also included in the [personal portfolio](https://hematyar-professional-portfolio.vercel.app/projects/atelier-north-interiors).
 
 ## Features
 
@@ -75,7 +75,7 @@ Tailwind uses the official @tailwindcss/vite plugin and CSS-first theme tokens. 
 
 ## Visual system and navigation
 
-The exact ivory, charcoal, taupe, beige and sage palette is defined in `src/index.css`, alongside spacing, responsive gutters, an 80rem container and fluid heading sizes. Cormorant Garamond and Inter are locally hosted with font-display: swap; font provenance and SIL licenses are in `public/fonts`. English Latin subsets are included. Taupe and sage serve as decorative accents; text uses charcoal against ivory/beige or the reverse.
+The approved luxury dark palette uses near-black and charcoal surfaces, soft ivory text and restrained champagne accents, defined in `src/index.css`, alongside spacing, responsive gutters, an 80rem container and fluid heading sizes. Cormorant Garamond and Inter are locally hosted with font-display: swap; font provenance and SIL licenses are in `public/fonts`. English Latin subsets are included. Semantic canvas/surface/ink/muted/accent tokens keep all page and interaction states consistent. Text stays on dark opaque surfaces; reduced-motion settings remove hero entrance and image hover motion.
 
 The desktop header is sticky from 1024px. Smaller layouts use an inline navigation disclosure with native link/button keyboard behavior, expanded state, Escape dismissal and focus return. It closes on navigation, focus leaving the header or a breakpoint change. The menu is not a modal dialog and does not trap focus. Route changes focus the main landmark; the skip link bypasses navigation. Motion is limited to CSS state transitions and disabled for reduced-motion preference.
 
@@ -97,7 +97,7 @@ Dates use `Intl.DateTimeFormat` with `America/Vancouver`, not the device's local
 
 Testimonials are explicitly fictional examples at page and quotation level, without real identities, ratings or verified-review claims. No backend, database, payments or authentication is included.
 
-The five specification documents remain unchanged. memory.md records verified work and approved review decisions. HTML remains intentionally noindex until the publication/indexing policy is reviewed.
+The approved dark redesign is documented in design.md; the other specification documents remain unchanged. memory.md records verified work and approved review decisions. HTML remains intentionally noindex until the publication/indexing policy is reviewed.
 
 ## Reference photography
 

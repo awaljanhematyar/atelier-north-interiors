@@ -16,8 +16,10 @@ export default function HomePage() {
   return <>
     <section className="home-hero" aria-labelledby="page-title">
       <Container>
-        <div className="hero-heading"><div><p className="eyebrow">Interior design · Vancouver, BC</p><h1 id="page-title">Spaces That{' '}<br />Tell Your Story.</h1></div><div className="hero-aside"><p>Thoughtful spaces.{' '}<br />Natural materials.{' '}<br />A quieter kind of luxury.</p><a href="#selected-projects" className="text-link">Explore the concepts <ArrowDown size={16} aria-hidden="true" /></a></div></div>
+        <div className="hero-scene">
+        <div className="hero-heading"><div><p className="eyebrow">Interior design · Vancouver, BC</p><h1 id="page-title">Spaces That{' '}<br /><span>Tell Your Story.</span></h1></div><div className="hero-aside"><p>Thoughtful spaces.{' '}<br />Natural materials.{' '}<br />A quieter kind of luxury.</p><a href="#selected-projects" className="text-link">Explore the concepts <ArrowDown size={16} aria-hidden="true" /></a></div></div>
         <Photo image={hero} priority sizes="(min-width: 1280px) 1152px, 100vw" className="hero-photo" />
+        </div>
         <div className="hero-caption"><span>01 / Cedar & Light — a fictional residential concept</span><ImageCredit image={hero} /></div>
       </Container>
     </section>
