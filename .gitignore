@@ -1,0 +1,31 @@
+node_modules/
+dist/
+coverage/
+.vite/
+*.local
+.env
+.env.*
+*.log
+.DS_Store
+Thumbs.db
+.vercel/
+
+# Local credentials, private keys and machine-specific settings
+.secrets/
+secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+.npmrc
+
+# Temporary and editor recovery files
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
