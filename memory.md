@@ -24,7 +24,7 @@ Phases 0A, 0B, 1, 2, 3 and 4 were verified on 2026-10-21. Phase 5 local QA and o
 - [x] Phase 6: deployment and handoff, with documented limitations
 
 ## Current task
-User approved luxury dark redesign and deployment on 2026-10-22. Redesign implemented and locally verified; release commit/push and production verification follow the latest entry. Keep indexing disabled and all forms demo-only.
+Approved luxury dark redesign is deployed and live at https://atelier-north-interiors.vercel.app, verified on 2026-10-22. Keep indexing disabled and all forms demo-only. See the latest redesign release record.
 
 ## Completed setup
 - Reread all six planning documents completely before editing; the root initially contained only these six files and no README.
@@ -475,5 +475,10 @@ Node 24.16.0/npm 11.13.0, explicit C:\Program Files\nodejs PATH, project D:\atel
 - node tmp/dark-screenshots.cjs: actual five dark captures at existing documented dimensions; visually inspected desktop/mobile home, desktop portfolio, mobile contact and desktop testimonials. Supporting screenshots/reports stay ignored under tmp. No generated mockups.
 
 ### Release and limitations
-- Review scoped diff, protected content/metadata/manifests, staged paths and secret patterns before committing. Release message: feat: redesign Atelier North with luxury dark theme. Push normally to existing origin/main; existing Vercel Git connection deploys to the same project. Verify READY matches the resulting commit, all nineteen live route heads/assets/sitemap/404s and dark rendered desktop/mobile layouts; resulting hash and production observations are reported after execution.
+- Reviewed scoped diff, unchanged protected data/SEO/manifests, twelve staged paths and common credential patterns; git diff --check passed. Redesign commit 0bc778b509b94f4fb4315447679e106a7b555b60 (feat: redesign Atelier North with luxury dark theme) pushed normally; main/origin/main clean and 0/0. Existing Vercel project automatically deployed dpl_8oSqUUYySqdeXMXMvWDqKBJ3vmPF READY for that exact commit. No new project or repository.
 - Keep SITE_URL=https://atelier-north-interiors.vercel.app and INDEX_SITE=false. No real enquiries or bookings. Prior Lighthouse/field/screen-reader/physical-device limitations still apply; no new Lighthouse or field performance scores claimed.
+### Post-deployment verification
+- Final documentation-aware npm run build passed in 4.17s, unchanged application asset sizes/hashes from the first redesigned build. Local preview stopped after verification.
+- node tmp/dark-live-layout.cjs: all 36 production page/viewport combinations passed at 375/768/1024/1440, computed dark colour-scheme and #111211 canvas verified, zero horizontal overflow. Actual desktop/mobile live homepage captures visually reviewed.
+- node tmp/phase6-http.mjs: final live nineteen routes/heads/canonicals/social metadata, nineteen sitemap entries, four custom noindex 404s, twenty-eight assets, security and immutable caching passed. Public production remains noindex/nofollow with Disallow robots.
+- This documentation follow-up records the independently verified implementation commit and deployment. Its own resulting documentation commit hash and final synchronization are reported after execution.- node tmp/dark-live.cjs: final deployed Chromium 155 passed all 197 responsive/interaction states, nineteen raw heads and nineteen internal targets; zero unexpected console/page/resource errors or external requests. Includes mobile menu keyboard, filters/history, galleries/focus, FAQs and both demo forms completion/reset. No change to privacy boundaries.
